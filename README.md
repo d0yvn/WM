@@ -8,7 +8,7 @@
 <div markdown="1">   
   
 - [2022.12.29 (4일차)](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/1)
-- [2022.12.29 (5일차)]()
+- [2022.12.29 (5일차)](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/2)
 </div>
 </details>
 
