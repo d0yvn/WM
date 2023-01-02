@@ -15,6 +15,8 @@
 <details>
 <summary>2주차(2023.01.02 ~ 2023.01.06)</summary>
 <div markdown="1">   
+  
+- [2023.01.12 (6일차)](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/3)
 </div>
 </details>
 
