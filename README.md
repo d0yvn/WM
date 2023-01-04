@@ -3,6 +3,10 @@
 ### 설계
 [캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
 
+[Sequence 다이어그램](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+
+[class 다이어그램](https://app.diagrams.net/#G1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b)
+
 ### 산출물
 -
 
