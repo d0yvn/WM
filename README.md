@@ -1,7 +1,7 @@
 # 프로젝트 개요
 <!-- 기술 및 기능 요구사항, 산출물 등을 링크로 포함해주세요. -->
 ### 설계
-- [캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
+[캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
 
 ### 산출물
 -
