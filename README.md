@@ -8,18 +8,17 @@
 
 # 프로젝트 진행 일정
 <!-- 주차별로 한눈에 볼수 있도록 정리해주세요. -->
-### 1주차
+> ### 1주차
 개인 공부 진행
 > ### 2주차
-|Day|작업내용|특이사항|
-|------|:---:|:---:|
-|Day 6|개인 공부| |
-|Day 7|[클래스 다이어그램 설계]()||
-||[데이터베이스 설계]()||
-|Day 8|[클래스 다이어그램 설계 완성하기]()||
-||[캐시 정책 설계](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)||
-|Day 9|||
-|Day 10|[]()||
+- 설계를 위한 UML 공부
+- 클래스 다이어그램, DB, 시퀀드 다이어그램, 컴포넌트 다이어그램 설계
+- CoreData에 대한 캐시 정책 설계
+> ### 3주차
+- 설계 미완성된 부분 보충하기
+- DataLayer의 NetWork, LocalDatabase에 대한 Service구현
+- DTO 및 CoreData Entity 구현
+- SearchRepository, CacheRepository 구현
 
 # 일일 보고 링크
 <details>
