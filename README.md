@@ -3,11 +3,13 @@
 ### 설계
 [캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
 
-[시퀀스 다이어그램](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+[컴포넌트 다이어그램](https://app.diagrams.net/#G1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU)
 
 [클래스 다이어그램](https://app.diagrams.net/#G1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b)
 
-[데이터베이스](https://app.diagrams.net/#G1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw)
+[DB](https://app.diagrams.net/#G1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw)
+
+[시퀀스 다이어그램](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
 
 # 프로젝트 진행 일정
 <!-- 주차별로 한눈에 볼수 있도록 정리해주세요. -->
