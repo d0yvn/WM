@@ -9,7 +9,9 @@
 
 [DB](https://app.diagrams.net/#G1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw)
 
-[시퀀스 다이어그램](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+[시퀀스 다이어그램 UML](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+
+[시퀀스 다이어그램 설계](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 
 # 프로젝트 진행 일정
 <!-- 주차별로 한눈에 볼수 있도록 정리해주세요. -->
