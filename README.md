@@ -1,7 +1,7 @@
 # 프로젝트 개요
 <!-- 기술 및 기능 요구사항, 산출물 등을 링크로 포함해주세요. -->
 ### 설계
-[캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
+[캐시 정책 및 검색 결과 처리 방식](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/%EC%BA%90%EC%8B%9C-%EB%B0%8F-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%82%B9-%EC%A0%95%EC%B1%85)
 
 [컴포넌트 다이어그램](https://drive.google.com/file/d/1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU/view?usp=sharing)
 
