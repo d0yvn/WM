@@ -1,5 +1,5 @@
 ---
-name: Daily_Report Template
+name: daily report template
 about: 일일 보고 템플릿
 title: ''
 labels: ''
