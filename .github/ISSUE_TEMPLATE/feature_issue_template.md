@@ -1,6 +1,6 @@
 ---
-name: Trinap Issue Template
-about: Trinap의 이슈 템플릿입니다.
+name: Issue Template
+about: 이슈 템플릿입니다.
 title: ''
 labels: ''
 assignees: ''
