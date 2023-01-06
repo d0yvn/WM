@@ -7,7 +7,9 @@
 
 [클래스 다이어그램](https://drive.google.com/file/d/1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b/view?usp=sharing)
 
-[DB](https://drive.google.com/file/d/1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw/view?usp=sharing)
+[DB UML](https://drive.google.com/file/d/1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw/view?usp=sharing)
+
+[DB 설계](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/Database-%EC%84%A4%EA%B3%84)
 
 [시퀀스 다이어그램 UML](https://drive.google.com/file/d/1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx/view?usp=sharing)
 
