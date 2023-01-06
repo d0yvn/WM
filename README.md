@@ -3,13 +3,13 @@
 ### 설계
 [캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
 
-[컴포넌트 다이어그램](https://app.diagrams.net/#G1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU)
+[컴포넌트 다이어그램](https://drive.google.com/file/d/1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU/view?usp=sharing)
 
-[클래스 다이어그램](https://app.diagrams.net/#G1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b)
+[클래스 다이어그램](https://drive.google.com/file/d/1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b/view?usp=sharing)
 
-[DB](https://app.diagrams.net/#G1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw)
+[DB](https://drive.google.com/file/d/1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw/view?usp=sharing)
 
-[시퀀스 다이어그램 UML](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+[시퀀스 다이어그램 UML](https://drive.google.com/file/d/1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx/view?usp=sharing)
 
 [시퀀스 다이어그램 설계](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 
