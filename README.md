@@ -31,23 +31,16 @@
 
 # 일일 보고 링크
 
-|날짜|보고 링크|
-|------|------|
-|**1주차(2022.12.26 ~ 2022.12.30**)|Day 1|
-||Day 2|
-||Day 3|
-||[Day 4](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/1)|
-||[Day 5](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/2)|
-|**2주차(2023.01.02 ~ 2023.01.06)**|[Day 6](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/3)|
-||[Day 7](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/4)|
-||[Day 8](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/5)|
-||[Day 9](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/6)|
-|**3주차(2023.01.09 ~ 2023.01.13)**||
-|**4주차(2023.01.16 ~ 2026.01.20)**||
-|**5주차(2023.01.23 ~ 2026.01.27)**||
-|**6주차(2023.01.30 ~ 2026.02.03)**||
-|**7주차(2023.02.06 ~ 2026.02.10)**||
-|**8주차(2023.02.13 ~ 2026.02.17)**||
+|날짜|월|화|목|수|금|
+|------|------|------|------|------|------|
+|**1주차(2022.12.26 ~ 2022.12.30**)|Day 1|Day 2|Day 3|[Day 4](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/1)|[Day 5](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/2)|
+|**2주차(2023.01.02 ~ 2023.01.06)**|[Day 6](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/3)|[Day 7](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/4)|[Day 8](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/5)|[Day 9](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/6)||
+|**3주차(2023.01.09 ~ 2023.01.13)**||||||
+|**4주차(2023.01.16 ~ 2026.01.20)**||||||
+|**5주차(2023.01.23 ~ 2026.01.27)**||||||
+|**6주차(2023.01.30 ~ 2026.02.03)**||||||
+|**7주차(2023.02.06 ~ 2026.02.10)**||||||
+|**8주차(2023.02.13 ~ 2026.02.17)**||||||
 
 
 # 산출물 링크
