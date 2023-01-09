@@ -10,7 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "PresentationLayer",
-            targets: ["PresentationLayer"]),
+            targets: ["PresentationLayer"])
     ],
     dependencies: [
         .package(path: "../DomainLayer"),
@@ -24,6 +24,6 @@ let package = Package(
             dependencies: ["Kingfisher", "DomainLayer"]),
         .testTarget(
             name: "PresentationLayerTests",
-            dependencies: ["PresentationLayer"]),
+            dependencies: ["PresentationLayer"])
     ]
 )

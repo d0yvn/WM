@@ -10,7 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "DataLayer",
-            targets: ["DataLayer"]),
+            targets: ["DataLayer"])
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
@@ -24,6 +24,6 @@ let package = Package(
             dependencies: ["Alamofire", "DomainLayer"]),
         .testTarget(
             name: "DataLayerTests",
-            dependencies: ["DataLayer"]),
+            dependencies: ["DataLayer"])
     ]
 )
