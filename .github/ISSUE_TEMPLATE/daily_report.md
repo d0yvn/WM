@@ -1,3 +1,12 @@
+---
+name: daily report template
+about: 일일 보고 템플릿
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## 오늘 한 일 
 - 
 

@@ -1,15 +1,17 @@
 # 프로젝트 개요
 <!-- 기술 및 기능 요구사항, 산출물 등을 링크로 포함해주세요. -->
 ### 설계
-[캐시 정책 및 검색 결과 처리 방식](https://cotton-waterlily-6ce.notion.site/f4511b0cef884ea8b8bba6bbfcdac1d1)
+[캐시 정책 및 검색 결과 처리 방식](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/%EC%BA%90%EC%8B%9C-%EB%B0%8F-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%82%B9-%EC%A0%95%EC%B1%85)
 
-[컴포넌트 다이어그램](https://app.diagrams.net/#G1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU)
+[컴포넌트 다이어그램](https://drive.google.com/file/d/1JGGNIDxCzmlwdOe_gXWZF7AfYgkKplnU/view?usp=sharing)
 
-[클래스 다이어그램](https://app.diagrams.net/#G1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b)
+[클래스 다이어그램](https://drive.google.com/file/d/1lPDB3YPaAexg8YB4xlcPP7edkVIxUy-b/view?usp=sharing)
 
-[DB](https://app.diagrams.net/#G1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw)
+[DB UML](https://drive.google.com/file/d/1Z5J3zvctimMoqEmjE-Sz7D81QV9tA0uw/view?usp=sharing)
 
-[시퀀스 다이어그램 UML](https://app.diagrams.net/#G1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx)
+[DB 설계](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/Database-%EC%84%A4%EA%B3%84)
+
+[시퀀스 다이어그램 UML](https://drive.google.com/file/d/1wQMa8Kpc7yvXgvG0BNUwGIcw_1PmOrkx/view?usp=sharing)
 
 [시퀀스 다이어그램 설계](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/wiki/%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 
@@ -29,23 +31,16 @@
 
 # 일일 보고 링크
 
-|날짜|보고 링크|
-|------|------|
-|**1주차(2022.12.26 ~ 2022.12.30**)|Day 1|
-||Day 2|
-||Day 3|
-||[Day 4](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/1)|
-||[Day 5](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/2)|
-|**2주차(2023.01.02 ~ 2023.01.06)**|[Day 6](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/3)|
-||[Day 7](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/4)|
-||[Day 8](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/5)|
-||[Day 9](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/6)|
-|**3주차(2023.01.09 ~ 2023.01.13)**||
-|**4주차(2023.01.16 ~ 2026.01.20)**||
-|**5주차(2023.01.23 ~ 2026.01.27)**||
-|**6주차(2023.01.30 ~ 2026.02.03)**||
-|**7주차(2023.02.06 ~ 2026.02.10)**||
-|**8주차(2023.02.13 ~ 2026.02.17)**||
+|날짜|월|화|목|수|금|
+|------|------|------|------|------|------|
+|**1주차(2022.12.26 ~ 2022.12.30**)|Day 1|Day 2|Day 3|[Day 4](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/1)|[Day 5](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/2)|
+|**2주차(2023.01.02 ~ 2023.01.06)**|[Day 6](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/3)|[Day 7](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/4)|[Day 8](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/5)|[Day 9](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/6)|[day10](https://open.oss.navercorp.com/wm-mdev-internship/2023.01-mobiledev2-doyun.park/issues/7)|
+|**3주차(2023.01.09 ~ 2023.01.13)**||||||
+|**4주차(2023.01.16 ~ 2026.01.20)**||||||
+|**5주차(2023.01.23 ~ 2026.01.27)**||||||
+|**6주차(2023.01.30 ~ 2026.02.03)**||||||
+|**7주차(2023.02.06 ~ 2026.02.10)**||||||
+|**8주차(2023.02.13 ~ 2026.02.17)**||||||
 
 
 # 산출물 링크
