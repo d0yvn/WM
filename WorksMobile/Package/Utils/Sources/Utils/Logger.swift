@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum Logger {
+public enum Logger {
     
-    static func print(_ items: Any, file: String = #file, function: String = #function, line: Int = #line) {
+    public static func print(_ items: Any, file: String = #file, function: String = #function, line: Int = #line) {
         #if DEBUG
         Swift.print()
         Swift.print("🟢 Log at \(file.components(separatedBy: "/").last ?? "Some File")")
@@ -20,7 +20,7 @@ enum Logger {
         #endif
     }
     
-    static func printArray(_ array: [Any], file: String = #file, function: String = #function, line: Int = #line) {
+    public static func printArray(_ array: [Any], file: String = #file, function: String = #function, line: Int = #line) {
         #if DEBUG
         Swift.print()
         Swift.print("🟢 Log at \(file.components(separatedBy: "/").last ?? "Some File")")
