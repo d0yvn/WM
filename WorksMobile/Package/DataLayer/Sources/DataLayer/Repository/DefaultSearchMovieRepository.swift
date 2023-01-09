@@ -4,6 +4,7 @@
 //
 //  Created by USER on 2023/01/09.
 //
+
 import Combine
 import DomainLayer
 import Foundation
@@ -49,7 +50,7 @@ extension DefaultSearchRepository: SearchRepository {
     }
     
     
-    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Movie], Error> {
+    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[DomainLayer.Movie], Error> {
         let endpoint = SearchEndpoint.movie(keyword: keyword, start: start, count: display)
         return networkService.request(with: endpoint, type: ResponseData<[MovieDTO]>.self)
             .map { response in
