@@ -12,6 +12,13 @@ public struct BlogDTO: Codable {
     let link: String
     let description: String
     let bloggerName: String
-    let bloggerlink: String
+    let bloggerLink: String
     let postDate: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title, link, description
+        case bloggerName = "bloggername"
+        case bloggerLink = "bloggerlink"
+        case postDate = "postdate"
+    }
 }

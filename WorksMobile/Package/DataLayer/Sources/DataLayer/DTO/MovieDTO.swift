@@ -12,7 +12,7 @@ public struct MovieDTO: Codable {
     let link: String
     let image: String
     let subtitle: String
-    let putDate: String
+    let pubDate: String
     let director: String
     let actor: String
     let userRating: String
