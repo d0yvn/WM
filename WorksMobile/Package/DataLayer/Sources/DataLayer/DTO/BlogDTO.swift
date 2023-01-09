@@ -5,6 +5,7 @@
 //  Created by USER on 2023/01/09.
 //
 
+import DomainLayer
 import Foundation
 
 public struct BlogDTO: Codable {
@@ -20,5 +21,16 @@ public struct BlogDTO: Codable {
         case bloggerName = "bloggername"
         case bloggerLink = "bloggerlink"
         case postDate = "postdate"
+    }
+    
+    public func toModel() -> Blog {
+        return Blog(
+            title: self.title,
+            link: self.link,
+            description: self.description,
+            bloggerName: self.bloggerName,
+            bloggerLink: self.bloggerLink,
+            postDate: self.postDate
+        )
     }
 }
