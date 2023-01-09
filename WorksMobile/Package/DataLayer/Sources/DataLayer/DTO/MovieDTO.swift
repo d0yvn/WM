@@ -18,26 +18,6 @@ public struct MovieDTO: Codable {
     let actor: String
     let userRating: String
     
-    init(
-        title: String,
-        link: String,
-        image: String,
-        subtitle: String,
-        pubDate: String,
-        director: String,
-        actor: String,
-        userRating: String
-    ) {
-        self.title = title
-        self.link = link
-        self.image = image
-        self.subtitle = subtitle
-        self.pubDate = pubDate
-        self.director = director
-        self.actor = actor
-        self.userRating = userRating
-    }
-
     public func toModel() -> Movie {
         return Movie(
             title: self.title,
