@@ -30,38 +30,37 @@ final class SearchLogRepositoryTests: XCTestCase {
 
     func test_create_searchLog() {
         
-        let input = "keyword"
-        
-        self.searchLogRepository.update(keyword: input)
-            .sink {
-                Logger.print($0)
-            } receiveValue: {
-                XCTAssertEqual($0, input)
-            }
+        let expectation = expectation(description: "test_create_searchLog")
+        self.searchLogRepository.update(keyword: "keyword")
+            .combineLatest(searchLogRepository.update(keyword: "test"))
+            .flatMap { _ in self.searchLogRepository.fetchSearchLog() }
+            .sink(receiveCompletion: { _ in
+                expectation.fulfill()
+            }, receiveValue: { logs in
+                XCTAssertEqual(logs.count, 2, "검색된 히스토리는 현재\(logs.count)개입니다. \(logs)")
+            })
             .store(in: &cancellable)
+        
+        waitForExpectations(timeout: 3)
     }
     
     func test_delete_searchLog() {
-        
-        let input = "keyword"
-        
-        self.searchLogRepository.delete(keyword: input)
-            .sink {
-                Logger.print($0)
+        let expectation = expectation(description: "test_create_searchLog")
+        self.searchLogRepository.delete(keyword: "keyword")
+            .sink { _ in
+                expectation.fulfill()
             } receiveValue: { [weak self] in
-                
-                if let self {
-                    XCTAssertFalse(self.isContain(logs: $0, find: input))
-                }
+                guard let self else { return }
+                XCTAssertFalse(self.isContain(logs: $0, find: "keyword"))
             }
             .store(in: &cancellable)
+        
+        waitForExpectations(timeout: 3)
     }
     
     private func isContain(logs: [SearchLog], find: String) -> Bool {
-        for log in logs {
-            if log.keyword == find {
-                return true
-            }
+        for log in logs where log.keyword == find {
+            return true
         }
         return false
     }
