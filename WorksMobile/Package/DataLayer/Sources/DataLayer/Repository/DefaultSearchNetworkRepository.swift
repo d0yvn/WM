@@ -1,5 +1,5 @@
 //
-//  DefaultSearchRepository.swift
+//  DefaultSearchNetworkRepository.swift
 //  
 //
 //  Created by USER on 2023/01/09.
@@ -9,16 +9,16 @@ import Combine
 import DomainLayer
 import Foundation
 
-final public class DefaultSearchRepository {
+final public class DefaultSearchNetworkRepository {
     
-    let networkService: NetworkService
+    private let networkService: NetworkService
     
     public init(networkService: NetworkService = DefaultNetworkService.shared) {
         self.networkService = networkService
     }
 }
 
-extension DefaultSearchRepository: SearchRepository {
+extension DefaultSearchNetworkRepository: SearchNetworkRepository {
     public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[DomainLayer.Blog], Error> {
         let endpoint = SearchEndpoint.blog(keyword: keyword, start: start, count: display)
         return networkService.request(with: endpoint, type: ResponseData<[BlogDTO]>.self)
