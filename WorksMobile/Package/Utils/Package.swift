@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Utils",
+    platforms: [
+        .iOS(.v14)
+    ],
     products: [
         .library(
             name: "Utils",
@@ -15,6 +18,6 @@ let package = Package(
     targets: [
         .target(
             name: "Utils",
-            dependencies: []),
+            dependencies: [])
     ]
 )
