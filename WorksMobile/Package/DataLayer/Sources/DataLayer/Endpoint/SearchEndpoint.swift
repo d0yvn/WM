@@ -17,7 +17,7 @@ public enum SearchEndpoint {
 
 extension SearchEndpoint: Endpoint {
     public var baseURL: String {
-        return Secret.baseUrl
+        return Secret.baseURL
     }
     
     public var path: String {
