@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */; };
 		CE539D0B296BA561004133C2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE539D0A296BA561004133C2 /* .swiftlint.yml */; };
 		CEDC30BB2967F8BA007F7846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BA2967F8BA007F7846 /* AppDelegate.swift */; };
 		CEDC30BD2967F8BA007F7846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BC2967F8BA007F7846 /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogRepositoryTests.swift; sourceTree = "<group>"; };
 		CE539D08296BA35C004133C2 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = Package/Utils; sourceTree = "<group>"; };
 		CE539D0A296BA561004133C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CEDC30B72967F8BA007F7846 /* WorksMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorksMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */,
+				CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */,
 			);
 			path = WorksMobileTests;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */,
 				CEDC30D52967F8BC007F7846 /* WorksMobileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

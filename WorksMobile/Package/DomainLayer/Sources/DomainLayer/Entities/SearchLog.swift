@@ -8,7 +8,7 @@
 import Foundation
 
 public struct SearchLog {
-    let keyword: String
+    public let keyword: String
     
     public init(keyword: String) {
         self.keyword = keyword

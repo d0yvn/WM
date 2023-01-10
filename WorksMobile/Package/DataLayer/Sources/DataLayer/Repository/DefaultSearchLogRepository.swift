@@ -12,7 +12,7 @@ import Foundation
 public final class DefaultSearchLogRepository {
     private let coreDataStorage: CoreDataService
 
-    init(coreDataStorage: CoreDataService = CoreDataService.shared) {
+    public init(coreDataStorage: CoreDataService = CoreDataService.shared) {
         self.coreDataStorage = coreDataStorage
     }
 }
