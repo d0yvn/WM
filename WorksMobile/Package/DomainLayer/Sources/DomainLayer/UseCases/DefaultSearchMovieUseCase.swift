@@ -8,21 +8,26 @@
 import Combine
 import Foundation
 
-public protocol SearchMovieUseCase {
-    func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[Movie], Error>
-}
-
 public final class DefaultSearchMovieUseCase {
+    private let searchNetworkRepository: SearchNetworkRepository
+    private let searchCacheReository: SearchCacheRepository
     
-    let repository: SearchRepository
-    
-    public init(repository: SearchRepository) {
-        self.repository = repository
+    public init(
+        searchNetworkRepository: SearchNetworkRepository,
+        searchCacheReository: SearchCacheRepository
+    ) {
+        self.searchNetworkRepository = searchNetworkRepository
+        self.searchCacheReository = searchCacheReository
     }
 }
 
 extension DefaultSearchMovieUseCase: SearchMovieUseCase {
-    public func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[Movie], Error> {
-        return repository.fetchSearchResult(keyword: keyword, start: start, display: display)
+    public func execute(
+        keyword: String,
+        offset: Int,
+        count: Int,
+        isConnected: Bool
+    ) -> AnyPublisher<[Movie], Error> {
+        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
     }
 }

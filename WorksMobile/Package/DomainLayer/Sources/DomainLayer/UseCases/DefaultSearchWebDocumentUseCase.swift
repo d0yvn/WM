@@ -8,20 +8,26 @@
 import Combine
 import Foundation
 
-public protocol SearchWebDocumentUseCase {
-    func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[WebDocument], Error>
-}
-
 public final class DefaultSearchWebDocumentUseCase {
-    let repository: SearchRepository
+    private let searchNetworkRepository: SearchNetworkRepository
+    private let searchCacheReository: SearchCacheRepository
     
-    public init(repository: SearchRepository) {
-        self.repository = repository
+    public init(
+        searchNetworkRepository: SearchNetworkRepository,
+        searchCacheReository: SearchCacheRepository
+    ) {
+        self.searchNetworkRepository = searchNetworkRepository
+        self.searchCacheReository = searchCacheReository
     }
 }
 
 extension DefaultSearchWebDocumentUseCase: SearchWebDocumentUseCase {
-    public func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[WebDocument], Error> {
-        return repository.fetchSearchResult(keyword: keyword, start: start, display: display)
+    public func execute(
+        keyword: String,
+        offset: Int,
+        count: Int,
+        isConnected: Bool
+    ) -> AnyPublisher<[WebDocument], Error> {
+        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
     }
 }

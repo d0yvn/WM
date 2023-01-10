@@ -8,20 +8,28 @@
 import Combine
 import Foundation
 
-public protocol SearchImageUseCase {
-    func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[Image], Error>
-}
-
 public final class DefaultSearchImageUseCase {
-    let repository: SearchRepository
+    private let searchNetworkRepository: SearchNetworkRepository
+    private let searchCacheReository: SearchCacheRepository
     
-    public init(repository: SearchRepository) {
-        self.repository = repository
+    public init(
+        searchNetworkRepository: SearchNetworkRepository,
+        searchCacheReository: SearchCacheRepository
+    ) {
+        self.searchNetworkRepository = searchNetworkRepository
+        self.searchCacheReository = searchCacheReository
     }
 }
 
 extension DefaultSearchImageUseCase: SearchImageUseCase {
-    public func execute(keyword: String, start: Int, display: Int) -> AnyPublisher<[Image], Error> {
-        return repository.fetchSearchResult(keyword: keyword, start: start, display: display)
+    
+    public func execute(
+        keyword: String,
+        offset: Int,
+        count: Int,
+        isConnected: Bool
+    ) -> AnyPublisher<[Image], Error> {
+        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
     }
 }
+
