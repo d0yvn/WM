@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */; };
+		CE4858D7296CFEF700335DDD /* SearchMovieUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */; };
+		CE4858DA296D000E00335DDD /* MockSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858D9296D000E00335DDD /* MockSearchRepository.swift */; };
 		CE539D0B296BA561004133C2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE539D0A296BA561004133C2 /* .swiftlint.yml */; };
 		CEDC30BB2967F8BA007F7846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BA2967F8BA007F7846 /* AppDelegate.swift */; };
 		CEDC30BD2967F8BA007F7846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BC2967F8BA007F7846 /* SceneDelegate.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogRepositoryTests.swift; sourceTree = "<group>"; };
+		CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieUseCaseTests.swift; sourceTree = "<group>"; };
+		CE4858D9296D000E00335DDD /* MockSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchRepository.swift; sourceTree = "<group>"; };
 		CE539D08296BA35C004133C2 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = Package/Utils; sourceTree = "<group>"; };
 		CE539D0A296BA561004133C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CEDC30B72967F8BA007F7846 /* WorksMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorksMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +92,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE4858D0296CF98A00335DDD /* DataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */,
+			);
+			path = DataLayer;
+			sourceTree = "<group>";
+		};
+		CE4858D5296CFEE400335DDD /* DomainLayer */ = {
+			isa = PBXGroup;
+			children = (
+				CE4858D8296D000000335DDD /* Mocks */,
+				CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */,
+			);
+			path = DomainLayer;
+			sourceTree = "<group>";
+		};
+		CE4858D8296D000000335DDD /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				CE4858D9296D000E00335DDD /* MockSearchRepository.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		CEDC30AE2967F8BA007F7846 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */,
+				CE4858D5296CFEE400335DDD /* DomainLayer */,
+				CE4858D0296CF98A00335DDD /* DataLayer */,
 			);
 			path = WorksMobileTests;
 			sourceTree = "<group>";
@@ -335,7 +368,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */,
+				CE4858DA296D000E00335DDD /* MockSearchRepository.swift in Sources */,
 				CEDC30D52967F8BC007F7846 /* WorksMobileTests.swift in Sources */,
+				CE4858D7296CFEF700335DDD /* SearchMovieUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
