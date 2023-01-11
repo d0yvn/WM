@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 public protocol SearchLogRepository {
-    func fetchSearchLog() -> AnyPublisher<[SearchLog], Error>
+    func fetch() -> AnyPublisher<[SearchLog], Error>
     func delete(keyword: String) -> AnyPublisher<[SearchLog], Error>
     func update(keyword: String) -> AnyPublisher<String, Error>
 }

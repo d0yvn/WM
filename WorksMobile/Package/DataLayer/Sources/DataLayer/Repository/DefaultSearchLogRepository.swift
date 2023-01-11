@@ -10,31 +10,27 @@ import DomainLayer
 import Foundation
 
 public final class DefaultSearchLogRepository {
-    private let coreDataStorage: CoreDataService
+    private let storage: SearchLogStorage
 
-    public init(coreDataStorage: CoreDataService = CoreDataService.shared) {
-        self.coreDataStorage = coreDataStorage
+    public init(storage: SearchLogStorage = DefaultSearchLogStorage()) {
+        self.storage = storage
     }
 }
 
 extension DefaultSearchLogRepository: SearchLogRepository {
     
-    public func fetchSearchLog() -> AnyPublisher<[SearchLog], Error> {
+    public func fetch() -> AnyPublisher<[SearchLog], Error> {
         let request = SearchLogEntity.fetchRequest()
+        request.sortDescriptors = [.assendingByDate]
         
-        request.sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(SearchLogEntity.latestDate), ascending: false)
-        ]
-        
-        return coreDataStorage.fetch(request: request)
+        return storage.fetch()
             .map { $0.map { $0.toModel() } }
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
     
     public func delete(keyword: String) -> AnyPublisher<[SearchLog], Error> {
-        let request = SearchLogEntity.fetchRequest()
-        return coreDataStorage.delete(keyword: keyword, request: request)
+        return storage.delete(keyword: keyword)
             .map { $0.map { $0.toModel() } }
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
@@ -44,7 +40,7 @@ extension DefaultSearchLogRepository: SearchLogRepository {
         let request = SearchLogEntity.fetchRequest()
         request.predicate = NSPredicate(format: "keyword == %@", keyword)
         
-        return coreDataStorage.save(keyword: keyword, request: request)
+        return storage.update(keyword: keyword)
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
