@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CoreDataError: Error {
+public enum CoreDataError: Error {
     case fetchError(String)
     case saveError(String)
     case deleteError(String)
