@@ -19,7 +19,7 @@ public class DefaultFetchSearchLogUseCase {
 
 extension DefaultFetchSearchLogUseCase: FetchSearchLogUseCase {
     public func excute() -> AnyPublisher<[String], Error> {
-        return searchLogRepository.fetchSearchLog()
+        return searchLogRepository.fetch()
             .map { $0.map { $0.keyword } }
             .eraseToAnyPublisher()
     }

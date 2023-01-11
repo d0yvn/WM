@@ -9,7 +9,6 @@ import Combine
 import Foundation
 
 final public class DefaultDeleteSearchLogUseCase {
-    
     private let searchLogRepository: SearchLogRepository
     
     public init(searchLogRepository: SearchLogRepository) {
