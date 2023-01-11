@@ -8,17 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */; };
-		CE4858D7296CFEF700335DDD /* SearchMovieUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */; };
-		CE4858DA296D000E00335DDD /* MockSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858D9296D000E00335DDD /* MockSearchRepository.swift */; };
+		CE4858E5296E7D5400335DDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858E2296E7A5800335DDD /* AppDelegate.swift */; };
+		CE4FFA78296E99DB001A6FF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858E4296E7A5800335DDD /* SceneDelegate.swift */; };
 		CE539D0B296BA561004133C2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE539D0A296BA561004133C2 /* .swiftlint.yml */; };
-		CEDC30BB2967F8BA007F7846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BA2967F8BA007F7846 /* AppDelegate.swift */; };
-		CEDC30BD2967F8BA007F7846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30BC2967F8BA007F7846 /* SceneDelegate.swift */; };
-		CEDC30CA2967F8BC007F7846 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDC30C82967F8BC007F7846 /* LaunchScreen.storyboard */; };
 		CEDC30D52967F8BC007F7846 /* WorksMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */; };
 		CEDC30DF2967F8BC007F7846 /* WorksMobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30DE2967F8BC007F7846 /* WorksMobileUITests.swift */; };
 		CEDC30E12967F8BC007F7846 /* WorksMobileUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30E02967F8BC007F7846 /* WorksMobileUITestsLaunchTests.swift */; };
 		CEDC30F42967FA1D007F7846 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CEDC30F32967FA1D007F7846 /* Swinject */; };
-		CEDC30F82967FA95007F7846 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDC30F72967FA95007F7846 /* Assets.xcassets */; };
 		CEDC30FB2967FB94007F7846 /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = CEDC30FA2967FB94007F7846 /* DataLayer */; };
 		CEDC30FD2967FB94007F7846 /* DomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = CEDC30FC2967FB94007F7846 /* DomainLayer */; };
 		CEDC30FF2967FB94007F7846 /* PresentationLayer in Frameworks */ = {isa = PBXBuildFile; productRef = CEDC30FE2967FB94007F7846 /* PresentationLayer */; };
@@ -43,15 +39,14 @@
 
 /* Begin PBXFileReference section */
 		CE4858CC296CF41A00335DDD /* SearchLogRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogRepositoryTests.swift; sourceTree = "<group>"; };
-		CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieUseCaseTests.swift; sourceTree = "<group>"; };
-		CE4858D9296D000E00335DDD /* MockSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchRepository.swift; sourceTree = "<group>"; };
+		CE4858DF296E7A5800335DDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE4858E1296E7A5800335DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CE4858E2296E7A5800335DDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE4858E3296E7A5800335DDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE4858E4296E7A5800335DDD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CE539D08296BA35C004133C2 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = Package/Utils; sourceTree = "<group>"; };
 		CE539D0A296BA561004133C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CEDC30B72967F8BA007F7846 /* WorksMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorksMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEDC30BA2967F8BA007F7846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEDC30BC2967F8BA007F7846 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CEDC30C92967F8BC007F7846 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		CEDC30CB2967F8BC007F7846 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEDC30D02967F8BC007F7846 /* WorksMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorksMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksMobileTests.swift; sourceTree = "<group>"; };
 		CEDC30DA2967F8BC007F7846 /* WorksMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorksMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +55,6 @@
 		CEDC30EF2967F932007F7846 /* DomainLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DomainLayer; path = Package/DomainLayer; sourceTree = "<group>"; };
 		CEDC30F02967F980007F7846 /* DataLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DataLayer; path = Package/DataLayer; sourceTree = "<group>"; };
 		CEDC30F12967F9E9007F7846 /* PresentationLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = PresentationLayer; path = Package/PresentationLayer; sourceTree = "<group>"; };
-		CEDC30F72967FA95007F7846 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,21 +94,24 @@
 			path = DataLayer;
 			sourceTree = "<group>";
 		};
-		CE4858D5296CFEE400335DDD /* DomainLayer */ = {
+		CE4858DD296E7A5800335DDD /* WorksMobile */ = {
 			isa = PBXGroup;
 			children = (
-				CE4858D8296D000000335DDD /* Mocks */,
-				CE4858D6296CFEF700335DDD /* SearchMovieUseCaseTests.swift */,
+				CE4858DE296E7A5800335DDD /* App */,
 			);
-			path = DomainLayer;
+			path = WorksMobile;
 			sourceTree = "<group>";
 		};
-		CE4858D8296D000000335DDD /* Mocks */ = {
+		CE4858DE296E7A5800335DDD /* App */ = {
 			isa = PBXGroup;
 			children = (
-				CE4858D9296D000E00335DDD /* MockSearchRepository.swift */,
+				CE4858E3296E7A5800335DDD /* Info.plist */,
+				CE4858DF296E7A5800335DDD /* Assets.xcassets */,
+				CE4858E0296E7A5800335DDD /* LaunchScreen.storyboard */,
+				CE4858E4296E7A5800335DDD /* SceneDelegate.swift */,
+				CE4858E2296E7A5800335DDD /* AppDelegate.swift */,
 			);
-			path = Mocks;
+			path = App;
 			sourceTree = "<group>";
 		};
 		CEDC30AE2967F8BA007F7846 = {
@@ -122,7 +119,7 @@
 			children = (
 				CE539D0A296BA561004133C2 /* .swiftlint.yml */,
 				CEDC30EE2967F932007F7846 /* Packages */,
-				CEDC30B92967F8BA007F7846 /* WorksMobile */,
+				CE4858DD296E7A5800335DDD /* WorksMobile */,
 				CEDC30D32967F8BC007F7846 /* WorksMobileTests */,
 				CEDC30DD2967F8BC007F7846 /* WorksMobileUITests */,
 				CEDC30B82967F8BA007F7846 /* Products */,
@@ -140,19 +137,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CEDC30B92967F8BA007F7846 /* WorksMobile */ = {
-			isa = PBXGroup;
-			children = (
-				CEDC30ED2967F8DF007F7846 /* App */,
-			);
-			path = WorksMobile;
-			sourceTree = "<group>";
-		};
 		CEDC30D32967F8BC007F7846 /* WorksMobileTests */ = {
 			isa = PBXGroup;
 			children = (
 				CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */,
-				CE4858D5296CFEE400335DDD /* DomainLayer */,
 				CE4858D0296CF98A00335DDD /* DataLayer */,
 			);
 			path = WorksMobileTests;
@@ -165,18 +153,6 @@
 				CEDC30E02967F8BC007F7846 /* WorksMobileUITestsLaunchTests.swift */,
 			);
 			path = WorksMobileUITests;
-			sourceTree = "<group>";
-		};
-		CEDC30ED2967F8DF007F7846 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				CEDC30BA2967F8BA007F7846 /* AppDelegate.swift */,
-				CEDC30BC2967F8BA007F7846 /* SceneDelegate.swift */,
-				CEDC30CB2967F8BC007F7846 /* Info.plist */,
-				CEDC30C82967F8BC007F7846 /* LaunchScreen.storyboard */,
-				CEDC30F72967FA95007F7846 /* Assets.xcassets */,
-			);
-			path = App;
 			sourceTree = "<group>";
 		};
 		CEDC30EE2967F932007F7846 /* Packages */ = {
@@ -312,8 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE539D0B296BA561004133C2 /* .swiftlint.yml in Resources */,
-				CEDC30F82967FA95007F7846 /* Assets.xcassets in Resources */,
-				CEDC30CA2967F8BC007F7846 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,8 +333,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEDC30BB2967F8BA007F7846 /* AppDelegate.swift in Sources */,
-				CEDC30BD2967F8BA007F7846 /* SceneDelegate.swift in Sources */,
+				CE4858E5296E7D5400335DDD /* AppDelegate.swift in Sources */,
+				CE4FFA78296E99DB001A6FF1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,9 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4858CD296CF41A00335DDD /* SearchLogRepositoryTests.swift in Sources */,
-				CE4858DA296D000E00335DDD /* MockSearchRepository.swift in Sources */,
 				CEDC30D52967F8BC007F7846 /* WorksMobileTests.swift in Sources */,
-				CE4858D7296CFEF700335DDD /* SearchMovieUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,10 +372,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		CEDC30C82967F8BC007F7846 /* LaunchScreen.storyboard */ = {
+		CE4858E0296E7A5800335DDD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CEDC30C92967F8BC007F7846 /* Base */,
+				CE4858E1296E7A5800335DDD /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -537,8 +509,9 @@
 				INFOPLIST_FILE = WorksMobile/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -546,6 +519,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = WorksMobile.WorksMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -564,8 +540,9 @@
 				INFOPLIST_FILE = WorksMobile/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,6 +550,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = WorksMobile.WorksMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
