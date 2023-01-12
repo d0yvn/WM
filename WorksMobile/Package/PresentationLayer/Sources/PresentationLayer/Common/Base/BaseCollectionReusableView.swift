@@ -17,6 +17,7 @@ public class BaseCollectionReusableView: UICollectionReusableView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = .white
         configureAttributes()
         configureHierarchy()
         configureConstraints()
@@ -33,4 +34,3 @@ public class BaseCollectionReusableView: UICollectionReusableView {
         fatalError("init(coder:) is called.")
     }
 }
-
