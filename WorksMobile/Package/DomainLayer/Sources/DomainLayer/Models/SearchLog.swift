@@ -7,10 +7,15 @@
 
 import Foundation
 
-public struct SearchLog {
+public struct SearchLog: Hashable {
     public let keyword: String
+    public let latestDate: Date
     
-    public init(keyword: String) {
+    public init(
+        keyword: String,
+        latestDate: Date
+    ) {
         self.keyword = keyword
+        self.latestDate = latestDate
     }
 }
