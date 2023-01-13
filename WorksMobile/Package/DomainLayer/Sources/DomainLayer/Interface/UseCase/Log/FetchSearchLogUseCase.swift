@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 public protocol FetchSearchLogUseCase {
-    func excute() -> AnyPublisher<[String], Error>
+    func excute() -> AnyPublisher<[SearchLog], Error>
 }

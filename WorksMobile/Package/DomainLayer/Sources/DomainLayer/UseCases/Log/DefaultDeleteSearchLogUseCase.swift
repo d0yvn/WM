@@ -17,9 +17,8 @@ final public class DefaultDeleteSearchLogUseCase {
 }
 
 extension DefaultDeleteSearchLogUseCase: DeleteSearchLogUseCase {
-    public func delete(keyword: String) -> AnyPublisher<[String], Error> {
+    public func delete(keyword: String) -> AnyPublisher<[SearchLog], Error> {
         return searchLogRepository.delete(keyword: keyword)
-            .map { $0.map { $0.keyword } }
             .eraseToAnyPublisher()
     }
 }
