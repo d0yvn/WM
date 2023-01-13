@@ -1,39 +1,39 @@
 //
-//  SearchLogRepositoryTests.swift
+//  SearchLogStorageTests.swift
 //  WorksMobileTests
 //
-//  Created by USER on 2023/01/10.
+//  Created by USER on 2023/01/13.
 //
+
 import Combine
 import DataLayer
 import DomainLayer
-import Utils
 import XCTest
 
-final class SearchLogRepositoryTests: XCTestCase {
+final class SearchLogStorageTests: XCTestCase {
 
+    private var searchLogStorage: SearchLogStorage!
     private var cancellable: Set<AnyCancellable>!
-    private var searchLogRepository: SearchLogRepository!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         
-        self.searchLogRepository = DefaultSearchLogRepository()
+        self.searchLogStorage = DefaultSearchLogStorage(coreDataService: CoreDataService(.inMemory))
         self.cancellable = []
     }
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        self.cancellable = nil
-        self.searchLogRepository = nil
+        
+        searchLogStorage = nil
+        cancellable = nil
     }
 
     func test_create_searchLog() {
-        
         let expectation = expectation(description: "test_create_searchLog")
-        self.searchLogRepository.update(keyword: "keyword")
-            .combineLatest(searchLogRepository.update(keyword: "test"))
-            .flatMap { _ in self.searchLogRepository.fetchSearchLog() }
+        searchLogStorage.update(keyword: "keyword")
+            .combineLatest(searchLogStorage.update(keyword: "test"))
+            .flatMap { _ in self.searchLogStorage.fetch() }
             .sink(receiveCompletion: { _ in
                 expectation.fulfill()
             }, receiveValue: { logs in
@@ -46,12 +46,14 @@ final class SearchLogRepositoryTests: XCTestCase {
     
     func test_delete_searchLog() {
         let expectation = expectation(description: "test_create_searchLog")
-        self.searchLogRepository.delete(keyword: "keyword")
+        
+        self.searchLogStorage.delete(keyword: "keyword")
             .sink { _ in
                 expectation.fulfill()
             } receiveValue: { [weak self] in
                 guard let self else { return }
-                XCTAssertFalse(self.isContain(logs: $0, find: "keyword"))
+                let items = $0.map { $0.toModel() }
+                XCTAssertFalse(self.isContain(logs: items, find: "keyword"))
             }
             .store(in: &cancellable)
         
