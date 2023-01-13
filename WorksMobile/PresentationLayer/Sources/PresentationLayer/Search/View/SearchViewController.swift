@@ -6,6 +6,7 @@
 //
 
 import Combine
+import DomainLayer
 import UIKit
 import Utils
 
@@ -16,8 +17,9 @@ public final class SearchViewController: BaseViewController {
     private lazy var tableView = UITableView()
     
     private lazy var deleteSearchLogSubject = PassthroughSubject<String, Never>()
+    private lazy var willSearchText = PassthroughSubject<SearchQuery, Never>()
     
-    private lazy var searchBar = WMSearchBar()
+    private lazy var searchBar = WMSearchView()
     
     lazy var adapter: SearchLogTableViewAdapter = {
         return SearchLogTableViewAdapter(tableView: self.tableView)
@@ -64,9 +66,12 @@ public final class SearchViewController: BaseViewController {
     }
     
     public override func bind() {
+        
         let input = SearchViewModel.Input(
-            updateSearchLog: searchBar.searchSubject.eraseToAnyPublisher(),
-            deleteSearchLog: deleteSearchLogSubject.eraseToAnyPublisher()
+            willUpdateSearchText: willSearchText.eraseToAnyPublisher(),
+            willDeleteSearchText: deleteSearchLogSubject.eraseToAnyPublisher(),
+            backButtonTap: searchBar.backButton
+                .tapPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -78,30 +83,24 @@ public final class SearchViewController: BaseViewController {
             }
             .store(in: &cancellable)
         
-        output.search
-            .sink { _ in
-                Logger.print("DA")
-            } receiveValue: {
-                print($0)
-            }
-            .store(in: &cancellable)
-        
-        searchBar.backButton
-            .tapPublisher
-            .sink { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+        output.typedText
+            .sink { [weak self] text in
+                guard let self else { return }
+                self.searchBar.updateTextField(text)
             }
             .store(in: &cancellable)
     }
 }
 
 extension SearchViewController: SearchLogTableViewAdapterDelegate {
+    func didTapDeleteAll() {
+    }
+    
     func didTapSearch(with keyword: String) {
-        Logger.print(keyword)
+        willSearchText.send(SearchQuery(keyword: keyword, isHistory: false))
     }
     
     func didTapDelete(with keyword: String) {
-        Logger.print(keyword)
         deleteSearchLogSubject.send(keyword)
     }
 }

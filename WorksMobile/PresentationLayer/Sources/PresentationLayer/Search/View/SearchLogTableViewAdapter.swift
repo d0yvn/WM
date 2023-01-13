@@ -12,6 +12,7 @@ import Utils
 protocol SearchLogTableViewAdapterDelegate: AnyObject {
     func didTapSearch(with keyword: String)
     func didTapDelete(with keyword: String)
+    func didTapDeleteAll()
 }
 
 final class SearchLogTableViewAdapter: NSObject {
@@ -73,6 +74,7 @@ extension SearchLogTableViewAdapter {
         guard section == 0, let headerView = tableView.dequeueHeaderFooterView(SearchLogTableHeaderView.self) else {
             return nil
         }
+        headerView.delegate = self
         return headerView
     }
 }
@@ -91,5 +93,11 @@ extension SearchLogTableViewAdapter: UITableViewDelegate {
 extension SearchLogTableViewAdapter: SearchLogTableViewCellDelegate {
     func didTapDeleteButton(keyword: String) {
         delegate?.didTapDelete(with: keyword)
+    }
+}
+
+extension SearchLogTableViewAdapter: SearchLogTableHeaderViewDelegate {
+    func didTapAllDelete() {
+        delegate?.didTapDeleteAll()
     }
 }
