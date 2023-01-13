@@ -20,7 +20,6 @@ public class BaseViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
-        
         configureAttributes()
         configureHierarchy()
         configureConstraints()

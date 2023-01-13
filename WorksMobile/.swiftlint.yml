@@ -20,7 +20,8 @@ disabled_rules:
   - trailing_whitespace
   - empty_count
   - line_length
-
+  - nesting
+  
 opt_in_rules:
   - array_init
   - attributes

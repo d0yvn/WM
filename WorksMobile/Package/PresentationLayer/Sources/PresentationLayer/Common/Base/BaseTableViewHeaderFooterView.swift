@@ -1,20 +1,21 @@
 //
-//  BaseTableViewCell.swift
+//  BaseTableViewHeaderFooterView.swift
 //  
 //
-//  Created by USER on 2023/01/11.
+//  Created by USER on 2023/01/12.
 //
 
 import Combine
 import UIKit
 
-public class BaseTableViewCell: UITableViewCell {
+class BaseTableViewHeaderFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Properties
     var cancellable: Set<AnyCancellable> = []
+    
     // MARK: - Methods
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    public override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .white
         configureAttributes()
@@ -22,7 +23,7 @@ public class BaseTableViewCell: UITableViewCell {
         configureConstraints()
         bind()
     }
-    
+
     public func configureHierarchy() {}
     public func configureConstraints() {}
     public func configureAttributes() {}
