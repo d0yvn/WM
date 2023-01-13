@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 public protocol DeleteSearchLogUseCase {
-    func delete(keyword: String) -> AnyPublisher<[String], Error>
+    func delete(keyword: String) -> AnyPublisher<[SearchLog], Error>
 }

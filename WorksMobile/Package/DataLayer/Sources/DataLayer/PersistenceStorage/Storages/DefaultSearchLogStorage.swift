@@ -8,6 +8,7 @@
 import CoreData
 import Combine
 import Foundation
+import Utils
 
 final public class DefaultSearchLogStorage {
     
@@ -39,12 +40,13 @@ extension DefaultSearchLogStorage: SearchLogStorage {
     
     public func delete(keyword: String) -> Future<[SearchLogEntity], CoreDataError> {
         let request = SearchLogEntity.fetchRequest()
-        
+        request.sortDescriptors = [.assendingByDate]
         return Future<[SearchLogEntity], CoreDataError> { [weak self] promise in
             self?.coreDataService.performBackgroundTask { context in
                 do {
                     var items = try context.fetch(request)
                     self?.delete(key: keyword, entities: &items, in: context)
+                    try context.save()
                     return promise(.success(items))
                 } catch {
                     return promise(.failure(.deleteError(error.localizedDescription)))
@@ -55,6 +57,7 @@ extension DefaultSearchLogStorage: SearchLogStorage {
     
     public func update(keyword: String) -> Future<String, CoreDataError> {
         let request = SearchLogEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "keyword == %@", keyword)
         
         return Future<String, CoreDataError> { [weak self] promise in
             guard let self else { return }

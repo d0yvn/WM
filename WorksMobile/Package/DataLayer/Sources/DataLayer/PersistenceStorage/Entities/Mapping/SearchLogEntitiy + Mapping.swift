@@ -18,7 +18,10 @@ extension SearchLogEntity {
 }
 
 extension SearchLogEntity {
-    func toModel() -> SearchLog {
-        return SearchLog(keyword: self.keyword ?? "")
+    public func toModel() -> SearchLog {
+        return SearchLog(
+            keyword: self.keyword ?? "",
+            latestDate: self.latestDate ?? Date()
+        )
     }
 }
