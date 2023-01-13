@@ -11,21 +11,20 @@ import PresentationLayer
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var appCoordinator: AppCoordinator?
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         
-        guard let mainViewModel = DIContainer.shared.container.resolve(MainViewModel.self) else {
-            return
-        }
+        let navigationController = UINavigationController()
+        appCoordinator = AppCoordinator(navigationController)
         
-        let viewController = MainViewController(viewModel: mainViewModel)
-        viewController.dependency = DIContainer.shared
+        window?.rootViewController = navigationController
         
-        window?.rootViewController = UINavigationController(rootViewController: viewController)
+        appCoordinator?.start()
     }
 }
 
