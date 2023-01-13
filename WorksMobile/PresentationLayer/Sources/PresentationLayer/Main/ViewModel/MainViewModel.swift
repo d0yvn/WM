@@ -13,6 +13,7 @@ import Utils
 final public class MainViewModel: ViewModelType {
     
     struct Input {
+        let showSearchView: AnyPublisher<Void, Never>
     }
     
     struct Output {
@@ -20,13 +21,28 @@ final public class MainViewModel: ViewModelType {
     
     var cancellable: Set<AnyCancellable> = []
     
-    public init(
+    private let subject = CurrentValueSubject<SearchQuery, Never>(SearchQuery(keyword: "", isHistory: false))
     
-    ) {
-
-    }
+    weak var coordinator: MainCoordinator?
+    
+    public init() { }
     
     func transform(input: Input) -> Output {
+        
+        input.showSearchView
+            .sink { [weak self] in
+                guard let self else { return }
+                self.coordinator?.showSearchViewController(subject: self.subject)
+            }
+            .store(in: &cancellable)
+        
+        self.subject
+            .sink { value in
+                self.coordinator?.popViewController()
+                Logger.print(value)
+            }
+            .store(in: &cancellable)
+        
         return Output()
     }
 }

@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol SearchLogTableHeaderViewDelegate: AnyObject {
+    func didTapAllDelete()
+}
+
 final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
+    
+    weak var delegate: SearchLogTableHeaderViewDelegate?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -18,7 +24,7 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
         return label
     }()
     
-    private lazy var deleteAllLogButton: UIButton = {
+    private lazy var deleteAllButton: UIButton = {
         let button = UIButton()
         button.setTitle("전체 삭제", for: .normal)
         button.setTitleColor(.systemGray, for: .normal)
@@ -30,7 +36,7 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
     override func configureHierarchy() {
         self.addSubviews([
             titleLabel,
-            deleteAllLogButton
+            deleteAllButton
         ])
     }
     
@@ -41,8 +47,17 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
         ])
         
         NSLayoutConstraint.activate([
-            deleteAllLogButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            deleteAllLogButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset * 2)
+            deleteAllButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            deleteAllButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset * 2)
         ])
+    }
+    
+    override func bind() {
+        deleteAllButton
+            .tapPublisher
+            .sink { [weak self] _ in
+                self?.delegate?.didTapAllDelete()
+            }
+            .store(in: &cancellable)
     }
 }

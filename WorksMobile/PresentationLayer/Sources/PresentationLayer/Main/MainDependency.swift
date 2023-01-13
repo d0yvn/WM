@@ -5,8 +5,11 @@
 //  Created by USER on 2023/01/13.
 //
 
-import Foundation
+import Combine
+import DomainLayer
 
-public protocol MainDependency: AnyObject {
-    func searchDependencies() -> SearchViewModel?
+public protocol MainDependency: Dependency, AnyObject {
+    func makeFetchSearchLogUseCase() -> FetchSearchLogUseCase?
+    func makeDeleteSearchLogUseCase() -> DeleteSearchLogUseCase?
+    func makeUpdateSearchLogUseCase() -> UpdateSearchLogUseCase?
 }

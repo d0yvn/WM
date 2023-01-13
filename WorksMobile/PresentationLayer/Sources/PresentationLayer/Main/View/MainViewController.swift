@@ -47,20 +47,8 @@ public final class MainViewController: BaseViewController {
     }
     
     public override func bind() {
-        self.button.tapPublisher
-            .sink { _ in
-                self.showSearchView()
-            }
-            .store(in: &cancellable)
-    }
-    
-    func showSearchView() {
-        guard let viewModel = dependency?.searchDependencies() else {
-            return
-        }
-
-        let viewController = SearchViewController(viewModel: viewModel)
-        
-        self.navigationController?.pushViewController(viewController, animated: false)
+        let input = MainViewModel.Input(showSearchView: self.button.tapPublisher
+            .eraseToAnyPublisher())
+        let output = viewModel.transform(input: input)
     }
 }

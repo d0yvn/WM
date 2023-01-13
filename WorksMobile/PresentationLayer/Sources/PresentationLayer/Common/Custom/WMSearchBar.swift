@@ -1,5 +1,5 @@
 //
-//  WMSearchBar.swift
+//  WMSearchView.swift
 //  
 //
 //  Created by USER on 2023/01/11.
@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class WMSearchBar: BaseView {
+final class WMSearchView: BaseView {
     
     // MARK: - Properties
     let searchSubject = PassthroughSubject<String, Never>()
@@ -116,6 +116,7 @@ final class WMSearchBar: BaseView {
     override func configureAttributes() {
         self.backgroundColor = .systemBackground
         self.translatesAutoresizingMaskIntoConstraints = false
+        configureTextField()
     }
     
     override func bind() {
@@ -127,9 +128,8 @@ final class WMSearchBar: BaseView {
         
         textField.textPublisher
             .map(\.isEmpty)
-            .sink { [weak self] isActivated in
-                self?.deleteButton.isUserInteractionEnabled = !isActivated
-                self?.deleteButton.alpha = !isActivated ? 1.0 : 0
+            .sink { [weak self] isEnabled in
+                self?.configureDeleteButton(!isEnabled)
             }
             .store(in: &cancellable)
         
@@ -142,5 +142,32 @@ final class WMSearchBar: BaseView {
                 self?.searchSubject.send($0)
             }
             .store(in: &cancellable)
+    }
+}
+
+// MARK: - UIButton
+extension WMSearchView {
+    private func configureDeleteButton(_ isEnabled: Bool) {
+        deleteButton.isUserInteractionEnabled = isEnabled
+        deleteButton.alpha = isEnabled ? 1.0 : 0
+    }
+}
+
+// MARK: - TextField
+extension WMSearchView {
+    
+    private func configureTextField() {
+        guard let text = textField.text else {
+            return
+        }
+        
+        let isEnabled = text.isEmpty
+        configureDeleteButton(!isEnabled)
+    }
+    
+    func updateTextField(_ text: String) {
+        self.textField.text = text
+        
+        configureDeleteButton(!text.isEmpty)
     }
 }

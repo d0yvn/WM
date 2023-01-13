@@ -47,7 +47,6 @@ private extension DIContainer {
     }
     
     func registerSearchLogUseCases() {
-        
         guard let repository = container.resolve(SearchLogRepository.self) else {
             return
         }
@@ -70,23 +69,6 @@ private extension DIContainer {
 private extension DIContainer {
     
     func registerViewModels() {
-        
-        guard
-            let fetchSearchLogUseCase = container.resolve(FetchSearchLogUseCase.self),
-            let deleteSearchLogUseCase = container.resolve(DeleteSearchLogUseCase.self),
-            let updateSearchLogUseCase = container.resolve(UpdateSearchLogUseCase.self)
-        else {
-            return
-        }
-        
-        container.register(SearchViewModel.self) { _ in
-            SearchViewModel(
-                fetchSearchUseCase: fetchSearchLogUseCase,
-                deleteSearchUseCase: deleteSearchLogUseCase,
-                updateSearchUseCase: updateSearchLogUseCase
-            )
-        }
-        
         container.register(MainViewModel.self) { _ in
             MainViewModel()
         }
@@ -94,7 +76,16 @@ private extension DIContainer {
 }
 
 extension DIContainer: MainDependency {
-    public func searchDependencies() -> SearchViewModel? {
-        return self.container.resolve(SearchViewModel.self)
+  
+    public func makeFetchSearchLogUseCase() -> FetchSearchLogUseCase? {
+        return container.resolve(FetchSearchLogUseCase.self)
+    }
+    
+    public func makeDeleteSearchLogUseCase() -> DeleteSearchLogUseCase? {
+        return container.resolve(DeleteSearchLogUseCase.self)
+    }
+    
+    public func makeUpdateSearchLogUseCase() -> UpdateSearchLogUseCase? {
+        return container.resolve(UpdateSearchLogUseCase.self)
     }
 }

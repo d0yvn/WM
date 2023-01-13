@@ -11,6 +11,7 @@
 		CE4FFA78296E99DB001A6FF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4858E4296E7A5800335DDD /* SceneDelegate.swift */; };
 		CE4FFA892970F326001A6FF1 /* SearchLogStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4FFA882970F326001A6FF1 /* SearchLogStorageTests.swift */; };
 		CE4FFA8E29710B15001A6FF1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4FFA8D29710B15001A6FF1 /* DIContainer.swift */; };
+		CE4FFA922971268A001A6FF1 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4FFA9129712689001A6FF1 /* AppCoordinator.swift */; };
 		CE539D0B296BA561004133C2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE539D0A296BA561004133C2 /* .swiftlint.yml */; };
 		CEDC30D52967F8BC007F7846 /* WorksMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30D42967F8BC007F7846 /* WorksMobileTests.swift */; };
 		CEDC30DF2967F8BC007F7846 /* WorksMobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC30DE2967F8BC007F7846 /* WorksMobileUITests.swift */; };
@@ -46,6 +47,7 @@
 		CE4858E4296E7A5800335DDD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CE4FFA882970F326001A6FF1 /* SearchLogStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogStorageTests.swift; sourceTree = "<group>"; };
 		CE4FFA8D29710B15001A6FF1 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		CE4FFA9129712689001A6FF1 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CE539D08296BA35C004133C2 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utils; sourceTree = "<group>"; };
 		CE539D0A296BA561004133C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CEDC30B72967F8BA007F7846 /* WorksMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorksMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 				CE4858E4296E7A5800335DDD /* SceneDelegate.swift */,
 				CE4858E2296E7A5800335DDD /* AppDelegate.swift */,
 				CE4FFA8D29710B15001A6FF1 /* DIContainer.swift */,
+				CE4FFA9129712689001A6FF1 /* AppCoordinator.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4FFA922971268A001A6FF1 /* AppCoordinator.swift in Sources */,
 				CE4858E5296E7D5400335DDD /* AppDelegate.swift in Sources */,
 				CE4FFA8E29710B15001A6FF1 /* DIContainer.swift in Sources */,
 				CE4FFA78296E99DB001A6FF1 /* SceneDelegate.swift in Sources */,
