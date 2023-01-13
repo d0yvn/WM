@@ -6,8 +6,6 @@
 //
 
 import Combine
-import DataLayer
-import DomainLayer
 import UIKit
 import Utils
 
@@ -15,6 +13,8 @@ public final class MainViewController: BaseViewController {
     
     // MARK: - Properties
     private let viewModel: MainViewModel
+    public weak var dependency: MainDependency?
+    
     private lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("ShowSearchHistories", for: .normal)
@@ -55,14 +55,12 @@ public final class MainViewController: BaseViewController {
     }
     
     func showSearchView() {
-        let repoisotry = DefaultSearchLogRepository()
+        guard let viewModel = dependency?.searchDependencies() else {
+            return
+        }
+
+        let viewController = SearchViewController(viewModel: viewModel)
         
-        let viewModel = SearchViewModel(fetchSearchUseCase: DefaultFetchSearchLogUseCase(searchLogRepository: repoisotry),
-                                        deleteSearchUseCase: DefaultDeleteSearchLogUseCase(searchLogRepository: repoisotry),
-                                        updateSearchUseCase: DefaultUpdateSearchLogUseCase(searchLogRepository: repoisotry))
-        
-        let vc = SearchViewController(viewModel: viewModel)
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: false)
     }
 }

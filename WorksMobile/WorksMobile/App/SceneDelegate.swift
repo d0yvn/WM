@@ -18,9 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         
-        let viewModel = MainViewModel()
+        guard let mainViewModel = DIContainer.shared.container.resolve(MainViewModel.self) else {
+            return
+        }
         
-        window?.rootViewController = UINavigationController(rootViewController: MainViewController(viewModel: viewModel))
+        let viewController = MainViewController(viewModel: mainViewModel)
+        viewController.dependency = DIContainer.shared
+        
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
     }
 }
 

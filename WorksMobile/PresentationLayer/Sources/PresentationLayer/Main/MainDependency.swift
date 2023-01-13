@@ -1,5 +1,5 @@
 //
-//  MainDIInterface.swift
+//  MainDependency.swift
 //  
 //
 //  Created by USER on 2023/01/13.
