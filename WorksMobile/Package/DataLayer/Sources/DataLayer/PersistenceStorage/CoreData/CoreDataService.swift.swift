@@ -10,13 +10,13 @@ import DomainLayer
 import Foundation
 import Utils
 
+public enum CoreDataStorageType {
+    case persistent, inMemory
+}
+
 final public class CoreDataService {
     
-    public enum StorageType {
-        case persistent, inMemory
-    }
-    
-    private let storageType: StorageType
+    private let storageType: CoreDataStorageType
     
     private let modelName = "WorksMobile"
     
@@ -46,7 +46,7 @@ final public class CoreDataService {
     }()
     
     // MARK: - Init
-    public init(_ storageType: StorageType = .persistent) {
+    public init(_ storageType: CoreDataStorageType = .persistent) {
         self.storageType = storageType
     }
     
@@ -103,6 +103,7 @@ final public class CoreDataService {
     
     func cache<T: NSManagedObject>(limit: Int = 30, request: NSFetchRequest<T>, in context: NSManagedObjectContext) throws {
         do {
+            request.sortDescriptors = [.assendingByDate]
             let items = try context.fetch(request)
             
             let overCapacity = items.count - limit

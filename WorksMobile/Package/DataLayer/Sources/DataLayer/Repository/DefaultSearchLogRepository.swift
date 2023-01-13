@@ -37,9 +37,6 @@ extension DefaultSearchLogRepository: SearchLogRepository {
     }
     
     public func update(keyword: String) -> AnyPublisher<String, Error> {
-        let request = SearchLogEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "keyword == %@", keyword)
-        
         return storage.update(keyword: keyword)
             .mapError { $0 as Error }
             .eraseToAnyPublisher()

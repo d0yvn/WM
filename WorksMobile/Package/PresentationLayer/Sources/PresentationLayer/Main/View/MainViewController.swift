@@ -1,0 +1,68 @@
+//
+//  MainViewController.swift
+//  WorksMobile
+//
+//  Created by USER on 2023/01/06.
+//
+
+import Combine
+import DataLayer
+import DomainLayer
+import UIKit
+import Utils
+
+public final class MainViewController: BaseViewController {
+    
+    // MARK: - Properties
+    private let viewModel: MainViewModel
+    private lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("ShowSearchHistories", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .red
+        return button
+    }()
+    
+    // MARK: - LifeCycle
+    public init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    public override func configureHierarchy() {
+        self.view.addSubviews([button])
+    }
+    
+    public override func configureConstraints() {
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+    }
+    
+    public override func bind() {
+        self.button.tapPublisher
+            .sink { _ in
+                self.showSearchView()
+            }
+            .store(in: &cancellable)
+    }
+    
+    func showSearchView() {
+        let repoisotry = DefaultSearchLogRepository()
+        
+        let viewModel = SearchViewModel(fetchSearchUseCase: DefaultFetchSearchLogUseCase(searchLogRepository: repoisotry),
+                                        deleteSearchUseCase: DefaultDeleteSearchLogUseCase(searchLogRepository: repoisotry),
+                                        updateSearchUseCase: DefaultUpdateSearchLogUseCase(searchLogRepository: repoisotry))
+        
+        let vc = SearchViewController(viewModel: viewModel)
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}

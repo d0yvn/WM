@@ -51,7 +51,7 @@ final class SearchLogTableViewAdapter: NSObject {
         var snapShot = NSDiffableDataSourceSnapshot<Section, SearchLog>()
         snapShot.appendSections(Section.allCases)
         snapShot.appendItems(items, toSection: .main)
-        dataSource?.apply(snapShot)
+        dataSource?.apply(snapShot, animatingDifferences: false)
     }
 }
 
