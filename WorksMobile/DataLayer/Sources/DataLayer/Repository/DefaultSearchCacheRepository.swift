@@ -10,7 +10,7 @@ import Combine
 import DomainLayer
 import Foundation
 
-final class DefaultSearchCacheRepository {
+final public class DefaultSearchCacheRepository {
     private let movieStorage: MovieResultStorage
 
     public init(movieStorage: MovieResultStorage) {
