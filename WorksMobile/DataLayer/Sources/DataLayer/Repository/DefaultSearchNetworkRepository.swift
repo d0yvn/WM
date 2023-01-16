@@ -40,7 +40,7 @@ extension DefaultSearchNetworkRepository: SearchNetworkRepository {
     }
     
     public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[DomainLayer.WebDocument], Error> {
-        let endpoint = SearchEndpoint.movie(keyword: keyword, start: start, count: display)
+        let endpoint = SearchEndpoint.webdocument(keyword: keyword, start: start, count: display)
         return networkService.request(with: endpoint, type: ResponseData<[WebDocumentDTO]>.self)
             .map { response in
                 response.items.map { $0.toModel() }
