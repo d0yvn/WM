@@ -7,28 +7,48 @@
 
 import Combine
 import UIKit
+import Utils
 
 final class WMSearchView: BaseView {
     
     // MARK: - Properties
+    enum Status {
+        case back
+        case icon
+        
+        var image: UIImage? {
+            switch self {
+            case .back:
+                return UIImage(systemName: "arrow.backward")?.withRenderingMode(.alwaysTemplate)
+            case .icon:
+                return UIImage(named: "icon")?.withRenderingMode(.alwaysOriginal)
+            }
+        }
+    }
+    
     let searchSubject = PassthroughSubject<String, Never>()
     
-    lazy var backButton: UIButton = {
+    private var status: Status {
+        didSet {
+            logoButton.setImage(status.image, for: .normal)
+        }
+    }
+    
+    lazy var logoButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.backward")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .systemGray
-        
+        button.setImage(status.image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var searchImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .systemGreen
-        imageView.image = UIImage(systemName: "magnifyingglass")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .systemGreen
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var textField: UITextField = {
@@ -41,7 +61,7 @@ final class WMSearchView: BaseView {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        
         button.backgroundColor = .lightGray
         button.tintColor = .white
         button.layer.cornerRadius = self.offset
@@ -50,6 +70,9 @@ final class WMSearchView: BaseView {
         button.isUserInteractionEnabled = false
         button.alpha = 0
         button.clipsToBounds = true
+        button.contentMode = .scaleAspectFit
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -61,13 +84,19 @@ final class WMSearchView: BaseView {
         return view
     }()
     
+    init(status: Status) {
+        self.status = status
+        
+        super.init(frame: .zero)
+    }
+    
     // MARK: - Methods
     override func configureHierarchy() {
         super.configureHierarchy()
         
         self.addSubviews([
-            backButton,
-            searchImageView,
+            logoButton,
+            searchButton,
             textField,
             deleteButton,
             divier
@@ -78,31 +107,31 @@ final class WMSearchView: BaseView {
         super.configureConstraints()
         
         NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset * 1.5),
-            backButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: offset * 4),
-            backButton.heightAnchor.constraint(equalToConstant: offset * 4)
+            logoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset * 1.5),
+            logoButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            logoButton.widthAnchor.constraint(equalToConstant: offset * 4),
+            logoButton.heightAnchor.constraint(equalToConstant: offset * 4)
         ])
         
         NSLayoutConstraint.activate([
-            searchImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -(offset * 1.5)),
-            searchImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            searchImageView.widthAnchor.constraint(equalToConstant: offset * 4),
-            searchImageView.heightAnchor.constraint(equalToConstant: offset * 4)
+            searchButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -(offset * 1.5)),
+            searchButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            searchButton.widthAnchor.constraint(equalToConstant: offset * 4),
+            searchButton.heightAnchor.constraint(equalToConstant: offset * 4)
         ])
 
         NSLayoutConstraint.activate([
-            deleteButton.trailingAnchor.constraint(equalTo: searchImageView.leadingAnchor, constant: -offset),
+            deleteButton.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: -offset),
             deleteButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             deleteButton.heightAnchor.constraint(equalToConstant: offset * 2),
             deleteButton.widthAnchor.constraint(equalToConstant: offset * 2)
         ])
         
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: offset),
+            textField.leadingAnchor.constraint(equalTo: logoButton.trailingAnchor, constant: offset),
+            textField.trailingAnchor.constraint(equalTo: deleteButton.leadingAnchor, constant: -offset),
             textField.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            textField.heightAnchor.constraint(equalToConstant: offset * 4),
-            textField.trailingAnchor.constraint(equalTo: deleteButton.leadingAnchor, constant: -offset)
+            textField.heightAnchor.constraint(equalToConstant: offset * 4)
         ])
         
         NSLayoutConstraint.activate([
