@@ -7,10 +7,11 @@
 
 import Foundation
 
-public struct WebDocument {
-    let title: String
-    let link: String
-    let description: String
+public struct WebDocument: Hashable {
+    
+    public let title: String
+    public let link: String
+    public let description: String
     
     public init(
         title: String,
