@@ -35,6 +35,8 @@ final public class MainCoordinator: Coordinator {
             return
         }
         
+        viewModel.coordinator = self
+        
         let viewController = MainViewController(viewModel: viewModel)
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(viewController, animated: true)
@@ -62,5 +64,9 @@ final public class MainCoordinator: Coordinator {
         let viewController = SearchViewController(viewModel: viewModel)
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(viewController, animated: false)
+    }
+    
+    func showDetailViewController(_ link: String) {
+        Logger.print(link)
     }
 }
