@@ -28,8 +28,12 @@ final public class MainCoordinator: Coordinator {
     }
     
     private func showMainViewController() {
-        let viewModel = MainViewModel()
-        viewModel.coordinator = self
+        guard
+            let dependency = dependency as? MainDependency,
+            let viewModel = dependency.makeMainViewModel()
+        else {
+            return
+        }
         
         let viewController = MainViewController(viewModel: viewModel)
         navigationController.setNavigationBarHidden(true, animated: false)
