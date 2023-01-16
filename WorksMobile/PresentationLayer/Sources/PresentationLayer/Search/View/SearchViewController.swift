@@ -19,7 +19,7 @@ public final class SearchViewController: BaseViewController {
     private lazy var deleteSearchLogSubject = PassthroughSubject<String, Never>()
     private lazy var willSearchText = PassthroughSubject<SearchQuery, Never>()
     
-    private lazy var searchBar = WMSearchView()
+    private lazy var searchBar = WMSearchView(status: .back)
     
     lazy var adapter: SearchLogTableViewAdapter = {
         return SearchLogTableViewAdapter(tableView: self.tableView)
@@ -70,7 +70,7 @@ public final class SearchViewController: BaseViewController {
         let input = SearchViewModel.Input(
             willUpdateSearchText: willSearchText.eraseToAnyPublisher(),
             willDeleteSearchText: deleteSearchLogSubject.eraseToAnyPublisher(),
-            backButtonTap: searchBar.backButton
+            backButtonTap: searchBar.logoButton
                 .tapPublisher.eraseToAnyPublisher()
         )
         
@@ -97,7 +97,7 @@ extension SearchViewController: SearchLogTableViewAdapterDelegate {
     }
     
     func didTapSearch(with keyword: String) {
-        willSearchText.send(SearchQuery(keyword: keyword, isHistory: false))
+        willSearchText.send(SearchQuery(keyword: keyword, isHistory: true))
     }
     
     func didTapDelete(with keyword: String) {

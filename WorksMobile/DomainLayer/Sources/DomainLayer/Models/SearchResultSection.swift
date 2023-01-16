@@ -20,5 +20,20 @@ public enum SearchResultSection: Int, CaseIterable {
         case blog(Blog)
         case image(Image)
         case webDocument(WebDocument)
+        
+        public var title: String? {
+            switch self {
+            case .movie:
+                return "영화"
+            case .webDocument:
+                return "웹 문서"
+            case .blog:
+                return "블로그"
+            case .image:
+                return "이미지"
+            case .tab:
+                return nil
+            }
+        }
     }
 }
