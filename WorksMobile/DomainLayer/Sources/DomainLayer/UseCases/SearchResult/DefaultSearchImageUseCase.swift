@@ -21,15 +21,14 @@ public final class DefaultSearchImageUseCase {
     }
 }
 
-//extension DefaultSearchImageUseCase: SearchImageUseCase {
-//    
-//    public func execute(
-//        keyword: String,
-//        offset: Int,
-//        count: Int,
-//        isConnected: Bool
-//    ) -> AnyPublisher<[Image], Error> {
-//        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
-//    }
-//}
-
+extension DefaultSearchImageUseCase: SearchImageUseCase {
+    
+    public func execute(
+        keyword: String,
+        offset: Int,
+        count: Int,
+        isConnected: Bool
+    ) -> AnyPublisher<[Image], Error> {
+        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+    }
+}

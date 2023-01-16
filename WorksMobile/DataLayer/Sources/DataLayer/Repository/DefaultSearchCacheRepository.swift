@@ -11,43 +11,58 @@ import DomainLayer
 import Foundation
 
 final public class DefaultSearchCacheRepository {
-    private let movieStorage: MovieResultStorage
+    private let searchResultStorage: DefaultSearchResultStorage
 
-    public init(movieStorage: MovieResultStorage) {
-        self.movieStorage = movieStorage
+    public init(searchResultStorage: DefaultSearchResultStorage) {
+        self.searchResultStorage = searchResultStorage
     }
 }
 
 extension DefaultSearchCacheRepository: SearchCacheRepository {
     public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Movie], Error> {
-        
-        return movieStorage.fetch(keyword: keyword)
+        let request = MovieEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "keyword == %@", keyword)
+        request.fetchOffset = start
+        request.fetchLimit = display
+        return searchResultStorage.fetch(request: request)
             .mapError { $0 as Error }
             .map { $0.map { $0.toModel() } }
             .eraseToAnyPublisher()
     }
-//
-//    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Blog], Error> {
-//        let request = BlogEntity.fetchRequest()
-//        return coreDataService.fetch(request: request, offset: start, display: display)
-//            .map { $0.map { $0.toModel() } }
-//            .mapError { $0 as Error }
-//            .eraseToAnyPublisher()
-//    }
-//
-//    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Image], Error> {
-//        let request = ImageEntity.fetchRequest()
-//        return coreDataService.fetch(request: request, offset: start, display: display)
-//            .map { $0.map { $0.toModel() } }
-//            .mapError { $0 as Error }
-//            .eraseToAnyPublisher()
-//    }
-//
-//    func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[WebDocument], Error> {
-//        let request = WebDocumentEntity.fetchRequest()
-//        return coreDataService.fetch(request: request, offset: start, display: display)
-//            .map { $0.map { $0.toModel() } }
-//            .mapError { $0 as Error }
-//            .eraseToAnyPublisher()
-//    }
+
+    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Blog], Error> {
+        let request = BlogEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "keyword == %@", keyword)
+        request.fetchOffset = start
+        request.fetchLimit = display
+        
+        return searchResultStorage.fetch(request: request)
+            .mapError { $0 as Error }
+            .map { $0.map { $0.toModel() } }
+            .eraseToAnyPublisher()
+    }
+
+    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[Image], Error> {
+        let request = ImageEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "keyword == %@", keyword)
+        request.fetchOffset = start
+        request.fetchLimit = display
+        
+        return searchResultStorage.fetch(request: request)
+            .mapError { $0 as Error }
+            .map { $0.map { $0.toModel() } }
+            .eraseToAnyPublisher()
+    }
+
+    public func fetchSearchResult(keyword: String, start: Int, display: Int) -> AnyPublisher<[WebDocument], Error> {
+        let request = WebDocumentEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "keyword == %@", keyword)
+        request.fetchOffset = start
+        request.fetchLimit = display
+        
+        return searchResultStorage.fetch(request: request)
+            .mapError { $0 as Error }
+            .map { $0.map { $0.toModel() } }
+            .eraseToAnyPublisher()
+    }
 }
