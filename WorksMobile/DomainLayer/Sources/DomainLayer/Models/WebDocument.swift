@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import Utils
 
 public struct WebDocument: Hashable {
-    
-    public let title: String
+
+    @WithoutHTML public var title: String
     public let link: String
-    public let description: String
+    @WithoutHTML public var description: String
     
     public init(
         title: String,
