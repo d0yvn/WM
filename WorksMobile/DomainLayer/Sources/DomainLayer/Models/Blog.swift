@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Blog {
+public struct Blog: Hashable {
     let title: String
     let link: String
     let description: String
