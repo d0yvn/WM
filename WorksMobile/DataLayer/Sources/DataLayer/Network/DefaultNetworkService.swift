@@ -45,7 +45,6 @@ final public class DefaultNetworkService: NetworkService {
             
             switch verifiedResult {
             case .success(let data):
-                print(String(decoding: data, as: UTF8.self))
                 return data
             case .failure(let error):
                 throw error
