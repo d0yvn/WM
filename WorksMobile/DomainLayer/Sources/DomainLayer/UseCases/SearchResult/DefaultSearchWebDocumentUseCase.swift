@@ -21,13 +21,13 @@ public final class DefaultSearchWebDocumentUseCase {
     }
 }
 
-//extension DefaultSearchWebDocumentUseCase: SearchWebDocumentUseCase {
-//    public func execute(
-//        keyword: String,
-//        offset: Int,
-//        count: Int,
-//        isConnected: Bool
-//    ) -> AnyPublisher<[WebDocument], Error> {
-//        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
-//    }
-//}
+extension DefaultSearchWebDocumentUseCase: SearchWebDocumentUseCase {
+    public func execute(
+        keyword: String,
+        offset: Int,
+        count: Int,
+        isConnected: Bool
+    ) -> AnyPublisher<[WebDocument], Error> {
+        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+    }
+}

@@ -34,7 +34,7 @@ final public class CoreDataService {
         if storageType == .inMemory {
             let description = NSPersistentStoreDescription()
             description.url = URL(fileURLWithPath: "/dev/null")
-            self.persistentContainer.persistentStoreDescriptions = [description]
+            container.persistentStoreDescriptions = [description]
         }
         
         container.loadPersistentStores(completionHandler: { _, error in
@@ -107,7 +107,7 @@ final public class CoreDataService {
             let items = try context.fetch(request)
             
             let overCapacity = items.count - limit
-            guard overCapacity > 0 else { return }
+            guard overCapacity >= 0 else { return }
             
             Logger.print("entitiy count over: \(overCapacity)")
             
@@ -127,6 +127,21 @@ final public class CoreDataService {
             } catch {
                 throw CoreDataError.saveError(error.localizedDescription)
             }
+        }
+    }
+    
+    func deleteAll<T: NSManagedObject>(request: NSFetchRequest<T>, context: NSManagedObjectContext) throws {
+        
+        do {
+            let items = try context.fetch(request)
+            
+            items.forEach {
+                context.delete($0)
+            }
+            
+            try context.save()
+        } catch {
+            throw CoreDataError.deleteError(error.localizedDescription)
         }
     }
     

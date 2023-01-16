@@ -9,7 +9,7 @@ import Combine
 import CoreData
 import Foundation
 
-public protocol MovieResultStorage {
-    func fetch(keyword: String) -> Future<[MovieEntity], CoreDataError>
-    func update(keyword: String, movies: [MovieDTO]) -> Future<[MovieEntity], CoreDataError>
+public protocol SearchResultStorage {
+    func fetch<T: NSManagedObject>(request: NSFetchRequest<T>) -> Future<[T], CoreDataError>
+//    func update<T: NSManagedObject, E: Codable>(request: NSFetchRequest<T>, keyword: String, movies: [E]) -> Future<[T], CoreDataError>
 }
