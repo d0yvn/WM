@@ -47,7 +47,7 @@ final class SearchResultCollectionViewAdapter: NSObject {
         dataSources.forEach { dataSource in
             dataSource.forEach { key, values in
                 snapshot.appendSections([key])
-                snapshot.appendItems(values, toSection: key)
+                snapshot.appendItems(values.isEmpty ? [SearchResultSection.Item.emtpty] : values, toSection: key)
             }
         }
         
@@ -66,6 +66,7 @@ extension SearchResultCollectionViewAdapter {
         collectionView.register(MovieResultCell.self)
         collectionView.register(WebDocumentResultCell.self)
         collectionView.register(SearchTabViewCell.self)
+        collectionView.register(EmptyCell.self)
         collectionView.registerReusableView(SearchHeaderView.self)
         collectionView.registerReusableView(ExpandFooterView.self)
         
@@ -105,17 +106,27 @@ extension SearchResultCollectionViewAdapter {
                 }
                 cell.configure(with: item)
                 return cell
+            case .emtpty:
+                guard let cell = collectionView.dequeueCell(EmptyCell.self, for: indexPath) else {
+                    return .init()
+                }
+                return cell
             }
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath -> UICollectionReusableView? in
             guard
                 let self,
-                let item = self.dataSource?.itemIdentifier(for: indexPath),
-                let title = item.title
-            else {
-                return nil
+                let title = self.dataSource?.sectionIdentifier(for: indexPath.section)?.title else {
+                return .init()
             }
+//            guard
+//                let self,
+//                let item = self.dataSource?.itemIdentifier(for: indexPath),
+//                let title = item.title
+//            else {
+//                return UICollectionReusableView()
+//            }
             
             switch kind {
             case SearchHeaderView.reuseIdentifier:
@@ -125,27 +136,21 @@ extension SearchResultCollectionViewAdapter {
                 headerView.configure(with: title)
                 return headerView
             case ExpandFooterView.reuseIdentifier:
-                guard
-                    self.searchTabType.value == .all,
-                        let footerView = collectionView.dequeResuableView(ExpandFooterView.self, for: indexPath) else {
+                guard let footerView = collectionView.dequeResuableView(ExpandFooterView.self, for: indexPath) else {
                     return .init()
                 }
                 return footerView
             default:
-                return nil
+                return .init()
             }
         }
     }
     
     func bind() {
-        self.searchTabType
-            .sink { Logger.print($0) }
-            .store(in: &cancellable)
     }
 }
 
 extension SearchResultCollectionViewAdapter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = self.dataSource?.itemIdentifier(for: indexPath) else {
             return
@@ -163,7 +168,6 @@ extension SearchResultCollectionViewAdapter: UICollectionViewDelegate, UICollect
 
 // MARK: - Layout
 extension SearchResultCollectionViewAdapter {
-    
     private func configureCollectionViewLayout(_ section: SearchResultSectionLayout, isCard: Bool) -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { index, _ -> NSCollectionLayoutSection? in
             return section.createLayout(section: index, isCard: isCard)
