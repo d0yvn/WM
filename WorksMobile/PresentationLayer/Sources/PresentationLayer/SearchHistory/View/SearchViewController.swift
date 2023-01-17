@@ -63,7 +63,7 @@ public final class SearchViewController: BaseViewController {
     
     public override func configureAttributes() {
         self.adapter.delegate = self
-        searchBar.textField.becomeFirstResponder()
+        searchBar.updateReponder()
     }
     
     public override func bind() {
