@@ -5,9 +5,19 @@
 //  Created by USER on 2023/01/16.
 //
 
+import DomainLayer
 import UIKit
+import Utils
+
+protocol ExpandFooterViewDelegate: AnyObject {
+    func didTapMoreButton(section: SearchResultSection?)
+}
 
 final class ExpandFooterView: BaseCollectionReusableView {
+    
+    private var section: SearchResultSection?
+    
+    weak var delegate: ExpandFooterViewDelegate?
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
@@ -17,18 +27,39 @@ final class ExpandFooterView: BaseCollectionReusableView {
         return button
     }()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        moreButton.setTitle(nil, for: .normal)
+    }
+    
     override func configureAttributes() {
         self.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        
+        self.layer.addBorder([.bottom, .top], color: .gray.withAlphaComponent(0.1), borderWidth: 0.5)
     }
     
-    override func configureHierarchy() {
+    func configureButton(_ section: SearchResultSection) {
+        self.section = section
+        
         addSubview(moreButton)
-    }
-    
-    override func configureConstraints() {
         NSLayoutConstraint.activate([
             moreButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             moreButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        
+        guard let title = section.title else {
+            return
+        }
+        moreButton.setTitle("\(title) 더 보기.", for: .normal)
+    }
+    
+    override func bind() {
+        moreButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.delegate?.didTapMoreButton(section: self.section)
+            }
+            .store(in: &cancellable)
     }
 }

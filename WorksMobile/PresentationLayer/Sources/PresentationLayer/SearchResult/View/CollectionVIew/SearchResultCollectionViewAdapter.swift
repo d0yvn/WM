@@ -20,17 +20,18 @@ final class SearchResultCollectionViewAdapter: NSObject {
     typealias Section = SearchResultSection
     typealias Item = SearchResultSection.Item
     
-    var cancellable: Set<AnyCancellable> = []
-    
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     private let collectionView: UICollectionView
+    
     weak var delegate: SearchResultCollectionViewAdapterDelegate?
+    
+    var cancellable: Set<AnyCancellable> = []
     
     private lazy var offset: CGFloat = {
         return collectionView.offset
     }()
     
-    let searchTabType = CurrentValueSubject<SearchResultSectionLayout, Never>(.all)
+    let tabStatus = CurrentValueSubject<SearchTab, Never>(.all)
     
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
@@ -38,7 +39,6 @@ final class SearchResultCollectionViewAdapter: NSObject {
         
         configureCollectionView()
         configureDataSource()
-        bind()
     }
     
     func apply(_ dataSources: [[Section: [Item]]]) {
@@ -51,7 +51,9 @@ final class SearchResultCollectionViewAdapter: NSObject {
             }
         }
         
-        dataSource?.apply(snapshot, animatingDifferences: false)
+        dataSource?.apply(snapshot, animatingDifferences: false, completion: { [weak self] in
+            self?.updateLayout()
+        })
     }
 }
 
@@ -59,7 +61,7 @@ final class SearchResultCollectionViewAdapter: NSObject {
 extension SearchResultCollectionViewAdapter {
     
     private func configureCollectionView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.register(BlogResultCell.self)
         collectionView.register(ImageResultCell.self)
@@ -70,7 +72,7 @@ extension SearchResultCollectionViewAdapter {
         collectionView.registerReusableView(SearchHeaderView.self)
         collectionView.registerReusableView(ExpandFooterView.self)
         
-        collectionView.setCollectionViewLayout(configureCollectionViewLayout(searchTabType.value, isCard: false), animated: true)
+        collectionView.setCollectionViewLayout(configureCollectionViewLayout(.all, isCard: false), animated: true)
     }
     
     private func configureDataSource() {
@@ -115,22 +117,14 @@ extension SearchResultCollectionViewAdapter {
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath -> UICollectionReusableView? in
-            guard
-                let self,
-                let title = self.dataSource?.sectionIdentifier(for: indexPath.section)?.title else {
-                return .init()
-            }
-//            guard
-//                let self,
-//                let item = self.dataSource?.itemIdentifier(for: indexPath),
-//                let title = item.title
-//            else {
-//                return UICollectionReusableView()
-//            }
+            guard let self else { return nil }
             
             switch kind {
             case SearchHeaderView.reuseIdentifier:
-                guard let headerView = collectionView.dequeResuableView(SearchHeaderView.self, for: indexPath) else {
+                guard
+                    let headerView = collectionView.dequeResuableView(SearchHeaderView.self, for: indexPath),
+                    let title = self.dataSource?.sectionIdentifier(for: indexPath.section)?.title
+                else {
                     return .init()
                 }
                 headerView.configure(with: title)
@@ -139,35 +133,68 @@ extension SearchResultCollectionViewAdapter {
                 guard let footerView = collectionView.dequeResuableView(ExpandFooterView.self, for: indexPath) else {
                     return .init()
                 }
+                
+                guard let section = self.dataSource?.sectionIdentifier(for: indexPath.section) else {
+                    return footerView
+                }
+                
+                if self.tabStatus.value == .all {
+                    footerView.configureButton(section)
+                    footerView.delegate = self
+                } else {
+                    footerView.backgroundColor = .white
+                }
+                
                 return footerView
             default:
                 return .init()
             }
         }
     }
-    
-    func bind() {
-    }
 }
 
+// MARK: - CollectionViewDelegate & UICollectionViewDelegateFlowLayout
 extension SearchResultCollectionViewAdapter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = self.dataSource?.itemIdentifier(for: indexPath) else {
-            return
-        }
+        guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return }
+        
         switch item {
         case let .tab(item):
             self.updateTabStatus(tab: item)
         case let .movie(item):
             self.delegate?.showDetailView(with: item.link)
+        case let .blog(item):
+            self.delegate?.showDetailView(with: item.link)
+        case let .image(item):
+            self.delegate?.showDetailView(with: item.link)
+        case let .webDocument(item):
+            self.delegate?.showDetailView(with: item.link)
         default:
             return
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let item = self.tabStatus.value.rawValue
+        let selectedIndexPath = IndexPath(item: item, section: 0)
+        collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
+    }
 }
 
-// MARK: - Layout
+// MARK: - CollectionViewLayout
 extension SearchResultCollectionViewAdapter {
+    private func updateLayout() {
+        let index = tabStatus.value.rawValue
+        
+        guard let sectionLayout = SearchResultSectionLayout(rawValue: index) else {
+            return
+        }
+        
+        let layout = self.configureCollectionViewLayout(sectionLayout, isCard: false)
+        self.collectionView.setCollectionViewLayout(layout, animated: false)
+        self.collectionView.setContentOffset(.zero, animated: true)
+    }
+    
     private func configureCollectionViewLayout(_ section: SearchResultSectionLayout, isCard: Bool) -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { index, _ -> NSCollectionLayoutSection? in
             return section.createLayout(section: index, isCard: isCard)
@@ -175,11 +202,21 @@ extension SearchResultCollectionViewAdapter {
     }
 }
 
+// MARK: - Tap Update
 extension SearchResultCollectionViewAdapter {
     private func updateTabStatus(tab: SearchTab) {
-        self.delegate?.updateNavigationTitle(with: tab.title)
+        delegate?.updateNavigationTitle(with: tab.title)
+        tabStatus.send(tab)
+    }
+}
+
+// MARK: - ExpandFooterViewDelegate
+extension SearchResultCollectionViewAdapter: ExpandFooterViewDelegate {
+    func didTapMoreButton(section: SearchResultSection?) {
+        guard let rawValue = section?.rawValue, let tab = SearchTab(rawValue: rawValue) else { return }
         
-        guard let tabStatus = SearchResultSectionLayout(rawValue: tab.rawValue) else { return }
-        searchTabType.send(tabStatus)
+        tabStatus.send(tab)
+        let selectedIndexPath = IndexPath(item: rawValue, section: 0)
+        collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
     }
 }

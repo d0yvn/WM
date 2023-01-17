@@ -14,18 +14,28 @@ final public class SearchResultViewModel: ViewModelType {
     
     typealias DataSource = [SearchResultSection: [SearchResultSection.Item]]
     
+    enum State {
+        case none
+        case fetching
+        case success(_ dataSource: [DataSource])
+        case failure
+    }
+    
+    // MARK: - UseCase
     private let searchMovieUseCase: SearchMovieUseCase
     private let searchImageUseCase: SearchImageUseCase
     private let searchBlogUseCase: SearchBlogUseCase
     private let searchWebDocumentUseCase: SearchWebDocumentUseCase
     
+    // MARK: - Properties
     struct Input {
+        let tabStatus: AnyPublisher<SearchTab, Never>
         let searchViewTrigger: AnyPublisher<Void, Never>
         let showDetailView: AnyPublisher<String, Never>
     }
     
     struct Output {
-        let dataSource: AnyPublisher<[DataSource], Error>
+        let state: AnyPublisher<State, Never>
     }
     
     var cancellable: Set<AnyCancellable> = []
@@ -33,6 +43,7 @@ final public class SearchResultViewModel: ViewModelType {
     private var offset: Int = 1
     
     private let searchInput = PassthroughSubject<SearchQuery, Never>()
+    private var stateSubject = CurrentValueSubject<State, Never>(.none)
     
     weak var coordinator: SearchCoordinator?
     
@@ -69,24 +80,76 @@ final public class SearchResultViewModel: ViewModelType {
             }
             .store(in: &cancellable)
         
-        let dataSource = searchInput
+        input.tabStatus
+            .combineLatest(searchInput)
             .withUnretained(self)
-            .flatMap { owner, query in
-                owner.fetchAllResult(query: query)
+            .flatMap { owner, parameters in
+                let (tap, query) = parameters
+                owner.stateSubject.send(.fetching)
+                return owner.fetchSearchResult(tab: tap, query: query)
             }
-            .eraseToAnyPublisher()
-
-        return Output(dataSource: dataSource)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                if case .failure = completion {
+                    self?.stateSubject.send(.failure)
+                }
+            }, receiveValue: { [weak self] dataSource in
+                self?.stateSubject.send(.success(dataSource))
+            })
+            .store(in: &cancellable)
+            
+        
+        return Output(state: self.stateSubject.eraseToAnyPublisher())
     }
-}
-
-extension SearchResultViewModel {
     
-    private func fetchTabItems() -> [DataSource] {
+    func fetchTabItems() -> [DataSource] {
         let items = SearchTab.allCases.map { tab in
             SearchResultSection.Item.tab(tab)
         }
         return [[SearchResultSection.tab: items]]
+    }
+}
+
+// MARK: - Fetch & Mapping
+extension SearchResultViewModel {
+    
+    private func fetchSearchResult(tab: SearchTab, query: SearchQuery) -> AnyPublisher<[DataSource], Error> {
+        switch tab {
+        case .all:
+            return self.fetchAllResult(query: query)
+        case .image:
+            return self.fetchMovieResult(query: query)
+                .withUnretained(self)
+                .map { owner, dataSources in
+                    owner.addTabItems(dataSources)
+                }
+                .eraseToAnyPublisher()
+        case .blog:
+            return fetchWebDocumentResult(query: query)
+                .withUnretained(self)
+                .map { owner, dataSources in
+                    owner.addTabItems(dataSources)
+                }
+                .eraseToAnyPublisher()
+        case .movie:
+            return self.fetchMovieResult(query: query)
+                .withUnretained(self)
+                .map { owner, dataSources in
+                    owner.addTabItems(dataSources)
+                }
+                .eraseToAnyPublisher()
+        case .webDocument:
+            return self.fetchWebDocumentResult(query: query)
+                .withUnretained(self)
+                .map { owner, dataSources in
+                    owner.addTabItems(dataSources)
+                }
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    private func addTabItems(_ dataSources: [DataSource]) -> [DataSource] {
+        return self.fetchTabItems() + dataSources
     }
     
     private func fetchMovieResult(query: SearchQuery, offset: Int = 1, count: Int = 10) -> AnyPublisher<[DataSource], Error> {

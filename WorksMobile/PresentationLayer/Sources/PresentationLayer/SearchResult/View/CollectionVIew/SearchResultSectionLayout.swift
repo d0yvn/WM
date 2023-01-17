@@ -10,11 +10,11 @@ import Utils
 
 public enum SearchResultSectionLayout: Int, CaseIterable {
     
-    case all
+    case all = 0
     case movie
     case blog
-    case webDocument
     case image
+    case webDocument
     
     var offset: CGFloat {
         return UIView().offset
@@ -24,21 +24,29 @@ public enum SearchResultSectionLayout: Int, CaseIterable {
         if section == 0 {
             return generateTabLayout()
         } else {
-            return generateMovieLayout(isCard: isCard)
+            switch self {
+            case .all, .blog, .image:
+                return generateMovieLayout(isCard: isCard)
+            case .webDocument:
+                return generateWebDocumentLayout(isCard: isCard)
+            case .movie:
+                return generateMovieLayout(isCard: isCard)
+            }
         }
     }
     
     private func generateTabLayout() -> NSCollectionLayoutSection {
-        let item = CompositionalLayout.createItem(width: .estimated(50), height: .absolute(offset * 6))
+        let item = CompositionalLayout.createItem(width: .fractionalWidth(1.0), height: .fractionalHeight(1.0))
         let group = CompositionalLayout.createGroup(
             alignment: .horizontal,
-            width: .fractionalWidth(1.0),
-            height: .absolute(offset * 6),
+            width: .estimated(offset * 7.5),
+            height: .estimated(offset * 5.5),
             items: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: offset, trailing: 0)
+        let footerView = CompositionalLayout.createBoundarySupplementaryItem(width: .fractionalWidth(1.0), height: .absolute(offset * 1), kind: ExpandFooterView.reuseIdentifier, alignment: .bottom)
+        section.boundarySupplementaryItems = [footerView]
         return section
     }
     
@@ -62,12 +70,13 @@ public enum SearchResultSectionLayout: Int, CaseIterable {
     
     private func generateWebDocumentLayout(isCard: Bool) -> NSCollectionLayoutSection {
         let widthRatio = isCard ? 0.5 : 1.0
+        
         let item = CompositionalLayout.createItem(width: .fractionalWidth(1.0), height: .fractionalHeight(1.0))
         
         let group = CompositionalLayout.createGroup(
             alignment: .horizontal,
             width: .fractionalWidth(widthRatio),
-            height: .estimated(offset * 5),
+            height: .estimated(offset * 15),
             items: [item]
         )
         
