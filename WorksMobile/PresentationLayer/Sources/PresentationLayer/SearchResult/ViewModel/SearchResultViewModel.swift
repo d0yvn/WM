@@ -15,7 +15,7 @@ final public class SearchResultViewModel: ViewModelType {
     typealias DataSource = [SearchResultSection: [SearchResultSection.Item]]
     
     enum State {
-        case none
+        case none(_ dataSource: [DataSource])
         case fetching
         case success(_ dataSource: [DataSource])
         case failure
@@ -43,7 +43,7 @@ final public class SearchResultViewModel: ViewModelType {
     private var offset: Int = 1
     
     private let searchInput = PassthroughSubject<SearchQuery, Never>()
-    private var stateSubject = CurrentValueSubject<State, Never>(.none)
+    private lazy var stateSubject = CurrentValueSubject<State, Never>(.none(fetchTabItems()))
     
     weak var coordinator: SearchCoordinator?
     
@@ -102,12 +102,7 @@ final public class SearchResultViewModel: ViewModelType {
         return Output(state: self.stateSubject.eraseToAnyPublisher())
     }
     
-    func fetchTabItems() -> [DataSource] {
-        let items = SearchTab.allCases.map { tab in
-            SearchResultSection.Item.tab(tab)
-        }
-        return [[SearchResultSection.tab: items]]
-    }
+    
 }
 
 // MARK: - Fetch & Mapping
@@ -146,6 +141,13 @@ extension SearchResultViewModel {
                 }
                 .eraseToAnyPublisher()
         }
+    }
+    
+    private func fetchTabItems() -> [DataSource] {
+        let items = SearchTab.allCases.map { tab in
+            SearchResultSection.Item.tab(tab)
+        }
+        return [[SearchResultSection.tab: items]]
     }
     
     private func addTabItems(_ dataSources: [DataSource]) -> [DataSource] {

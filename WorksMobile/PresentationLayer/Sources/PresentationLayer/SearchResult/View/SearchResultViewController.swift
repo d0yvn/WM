@@ -87,8 +87,6 @@ public final class SearchResultViewController: BaseViewController {
             showDetailView: webLinkSubject.eraseToAnyPublisher()
         )
         
-        collectionViewAdapter.apply(viewModel.fetchTabItems())
-        
         let output = viewModel.transform(input: input)
         
         output.state
@@ -103,7 +101,8 @@ public final class SearchResultViewController: BaseViewController {
 extension SearchResultViewController {
     private func handleState(_ state: SearchResultViewModel.State) {
         switch state {
-        case .none:
+        case .none(let dataSource):
+            self.collectionViewAdapter.apply(dataSource)
             self.placeholderView.updateDescription(.notStart)
         case .fetching:
             self.placeholderView.isHidden = true
