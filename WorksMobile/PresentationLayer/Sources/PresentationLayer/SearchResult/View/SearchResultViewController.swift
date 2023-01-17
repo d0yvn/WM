@@ -30,6 +30,7 @@ public final class SearchResultViewController: BaseViewController {
     
     private let webLinkSubject = PassthroughSubject<String, Never>()
     private let searchViewTrigger = PassthroughSubject<Void, Never>()
+    
     // MARK: - LifeCycle
     public init(viewModel: SearchResultViewModel) {
         self.viewModel = viewModel
@@ -44,8 +45,8 @@ public final class SearchResultViewController: BaseViewController {
     public override func configureHierarchy() {
         self.view.addSubviews([
             searchBarView,
-            collectionView,
-            placeholderView
+            placeholderView,
+            collectionView
         ])
     }
     
@@ -81,23 +82,39 @@ public final class SearchResultViewController: BaseViewController {
     public override func bind() {
         
         let input = SearchResultViewModel.Input(
+            tabStatus: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
             searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
             showDetailView: webLinkSubject.eraseToAnyPublisher()
         )
+        
+        collectionViewAdapter.apply(viewModel.fetchTabItems())
+        
         let output = viewModel.transform(input: input)
         
-        output.dataSource
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in
-                    self.placeholderView.isHidden = false
-                    self.placeholderView.updateDescriptionText(.fail)
-                }, receiveValue: { [weak self] dataSource in
-                    self?.placeholderView.isHidden = true
-                    self?.collectionViewAdapter.apply(dataSource)
-                }
-            )
+        output.state
+            .sink { [weak self] in
+                self?.handleState($0)
+            }
             .store(in: &cancellable)
+    }
+}
+
+// MARK: - Private
+extension SearchResultViewController {
+    private func handleState(_ state: SearchResultViewModel.State) {
+        switch state {
+        case .none:
+            self.placeholderView.updateDescription(.notStart)
+        case .fetching:
+            self.placeholderView.isHidden = true
+            self.showFullSizeIndicator()
+        case .success(let dataSource):
+            self.placeholderView.isHidden = true
+            self.collectionViewAdapter.apply(dataSource)
+            self.hideFullSizeIndicator()
+        case .failure:
+            self.placeholderView.updateDescription(.fail)
+        }
     }
     
     private func configureTapGesture() {
@@ -105,11 +122,12 @@ public final class SearchResultViewController: BaseViewController {
         self.searchBarView.addGestureRecognizer(tap)
     }
     
-    @objc func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
+    @objc private func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
         searchViewTrigger.send(Void())
     }
 }
 
+// MARK: - SearchResultCollectionViewAdapterDelegate
 extension SearchResultViewController: SearchResultCollectionViewAdapterDelegate {
     func showDetailView(with link: String) {
         self.webLinkSubject.send(link)
