@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  SearchResultViewModel.swift
 //  
 //
 //  Created by USER on 2023/01/11.
@@ -10,7 +10,7 @@ import DomainLayer
 import Foundation
 import Utils
 
-final public class MainViewModel: ViewModelType {
+final public class SearchResultViewModel: ViewModelType {
     
     typealias DataSource = [SearchResultSection: [SearchResultSection.Item]]
     
@@ -80,7 +80,7 @@ final public class MainViewModel: ViewModelType {
     }
 }
 
-extension MainViewModel {
+extension SearchResultViewModel {
     
     private func fetchTabItems() -> [DataSource] {
         let items = SearchTab.allCases.map { tab in

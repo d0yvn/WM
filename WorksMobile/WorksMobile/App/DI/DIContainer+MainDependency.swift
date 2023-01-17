@@ -12,8 +12,8 @@ import Foundation
 
 extension DIContainer: SearchDependency {
     
-    public func makeMainViewModel() -> MainViewModel? {
-        return container.resolve(MainViewModel.self)
+    public func makeMainViewModel() -> SearchResultViewModel? {
+        return container.resolve(SearchResultViewModel.self)
     }
     
     public func makeFetchSearchLogUseCase() -> FetchSearchLogUseCase? {
