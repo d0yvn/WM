@@ -37,11 +37,6 @@ public final class SearchResultViewController: BaseViewController {
         super.init()
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.title = "통합"
-    }
-    
     public override func configureHierarchy() {
         self.view.addSubviews([
             searchBarView,
@@ -80,6 +75,13 @@ public final class SearchResultViewController: BaseViewController {
     }
     
     public override func bind() {
+        
+        collectionViewAdapter.tabStatus
+            .compactMap { $0.title }
+            .sink { [weak self] title in
+                self?.navigationItem.title = title
+            }
+            .store(in: &cancellable)
         
         let input = SearchResultViewModel.Input(
             tabStatus: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
