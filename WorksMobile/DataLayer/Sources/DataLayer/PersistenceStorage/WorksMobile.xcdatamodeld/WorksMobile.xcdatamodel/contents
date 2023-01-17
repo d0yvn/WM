@@ -4,12 +4,14 @@
         <attribute name="bloggerLink" optional="YES" attributeType="String"/>
         <attribute name="bloggerName" optional="YES" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="keyword" optional="YES" attributeType="String"/>
         <attribute name="latestDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="postDate" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ImageEntity" representedClassName="ImageEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="keyword" optional="YES" attributeType="String"/>
         <attribute name="latestDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
@@ -19,6 +21,7 @@
         <attribute name="actor" optional="YES" attributeType="String"/>
         <attribute name="director" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="keyword" optional="YES" attributeType="String"/>
         <attribute name="latestDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="pubDate" optional="YES" attributeType="String"/>
@@ -32,6 +35,7 @@
     </entity>
     <entity name="WebDocumentEntity" representedClassName="WebDocumentEntity" syncable="YES" codeGenerationType="class">
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="keyword" optional="YES" attributeType="String"/>
         <attribute name="latestDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>

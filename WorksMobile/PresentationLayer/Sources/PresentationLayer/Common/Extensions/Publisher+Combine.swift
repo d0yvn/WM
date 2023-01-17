@@ -76,6 +76,12 @@ extension UITextField {
             .compactMap { $0.text }
             .eraseToAnyPublisher()
     }
+    
+    var beginEditingPublisher: AnyPublisher<Void, Never> {
+        controlPublisher(for: .editingDidBegin)
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
 }
 
 extension Publisher {

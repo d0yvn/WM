@@ -28,23 +28,23 @@ final public class SearchViewModel: ViewModelType {
     }
     
     var cancellable: Set<AnyCancellable> = []
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: SearchCoordinator?
     
     private var dataSource = CurrentValueSubject<[SearchLog], Never>([])
     
-    private let willSearchText: CurrentValueSubject<SearchQuery, Never>
+    private let searchInput: PassthroughSubject<SearchQuery, Never>
     
     // MARK: - Initailize
     public init(
         fetchSearchUseCase: FetchSearchLogUseCase,
         deleteSearchUseCase: DeleteSearchLogUseCase,
         updateSearchUseCase: UpdateSearchLogUseCase,
-        willSearchText: CurrentValueSubject<SearchQuery, Never>
+        searchInput: PassthroughSubject<SearchQuery, Never>
     ) {
         self.fetchSearchLogUseCase = fetchSearchUseCase
         self.deleteSearchLogUseCase = deleteSearchUseCase
         self.updateSearchLogUseCase = updateSearchUseCase
-        self.willSearchText = willSearchText
+        self.searchInput = searchInput
     }
     
     // MARK: - Methods
@@ -64,7 +64,7 @@ final public class SearchViewModel: ViewModelType {
             .assertNoFailure()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] output in
-                self?.willSearchText.send(output)
+                self?.searchInput.send(output)
             }
             .store(in: &cancellable)
         
@@ -85,7 +85,7 @@ final public class SearchViewModel: ViewModelType {
             }
             .store(in: &cancellable)
         
-        let existedSearchText = willSearchText
+        let existedSearchText = searchInput
             .map { $0.keyword }
             .eraseToAnyPublisher()
         
@@ -101,7 +101,7 @@ extension SearchViewModel {
     func requestUpdateSearchLog(with query: SearchQuery) -> AnyPublisher<SearchQuery, Error> {
         return updateSearchLogUseCase.update(keyword: query.keyword)
             .map {
-                SearchQuery(keyword: $0, isHistory: query.isHistory)
+                SearchQuery(keyword: $0, isHistory: query.isNetworking)
             }
             .eraseToAnyPublisher()
     }

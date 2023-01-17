@@ -12,7 +12,7 @@ import Utils
 final class WMSearchView: BaseView {
     
     // MARK: - Properties
-    enum Status {
+    enum ViewType {
         case back
         case icon
         
@@ -28,21 +28,18 @@ final class WMSearchView: BaseView {
     
     let searchSubject = PassthroughSubject<String, Never>()
     
-    private var status: Status {
-        didSet {
-            logoButton.setImage(status.image, for: .normal)
-        }
+    private var type: ViewType {
+        didSet { configure(type) }
     }
     
     lazy var logoButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemGray
-        button.setImage(status.image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var searchButton: UIButton = {
+    lazy var searchButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemGreen
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -51,7 +48,7 @@ final class WMSearchView: BaseView {
         return button
     }()
     
-    private lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "검색어 입력"
         textField.font = .systemFont(ofSize: 16)
@@ -84,8 +81,8 @@ final class WMSearchView: BaseView {
         return view
     }()
     
-    init(status: Status) {
-        self.status = status
+    init(type: ViewType) {
+        self.type = type
         
         super.init(frame: .zero)
     }
@@ -167,10 +164,15 @@ final class WMSearchView: BaseView {
                 self?.textField.text
             }
             .sink { [weak self] in
-                self?.textField.text = nil
                 self?.searchSubject.send($0)
             }
             .store(in: &cancellable)
+    }
+    
+    func configure(_ type: ViewType) {
+        textField.isUserInteractionEnabled = type == .back
+        searchButton.isEnabled = type == .back
+        logoButton.setImage(type.image, for: .normal)
     }
 }
 

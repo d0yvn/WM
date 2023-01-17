@@ -11,7 +11,6 @@ import UIKit
 
 final class AppCoordinator: Coordinator {
     
-    var dependency: Dependency?
     // MARK: - Properties
     weak var delegate: CoordinatorDelegate?
     var navigationController: UINavigationController
@@ -33,7 +32,7 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator {
     
     func showMainFlow() {
-        let mainCoordinator = MainCoordinator(navigationController)
+        let mainCoordinator = SearchCoordinator(navigationController)
         self.childCoordinators.append(mainCoordinator)
         mainCoordinator.dependency = DIContainer.shared
         mainCoordinator.start()

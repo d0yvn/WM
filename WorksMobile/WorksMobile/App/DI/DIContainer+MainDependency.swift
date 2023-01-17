@@ -10,7 +10,7 @@ import DomainLayer
 import PresentationLayer
 import Foundation
 
-extension DIContainer: MainDependency {
+extension DIContainer: SearchDependency {
     
     public func makeMainViewModel() -> MainViewModel? {
         return container.resolve(MainViewModel.self)

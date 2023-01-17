@@ -10,13 +10,13 @@ import DomainLayer
 import UIKit
 import Utils
 
-final public class MainCoordinator: Coordinator {
+final public class SearchCoordinator: Coordinator {
     
     public var delegate: CoordinatorDelegate?
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
     
-    public var dependency: Dependency?
+    public weak var dependency: SearchDependency?
     
     public init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -28,12 +28,7 @@ final public class MainCoordinator: Coordinator {
     }
     
     private func showMainViewController() {
-        guard
-            let dependency = dependency as? MainDependency,
-            let viewModel = dependency.makeMainViewModel()
-        else {
-            return
-        }
+        guard let viewModel = dependency?.makeMainViewModel() else { return }
         
         viewModel.coordinator = self
         
@@ -42,13 +37,12 @@ final public class MainCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showSearchViewController(subject: CurrentValueSubject<SearchQuery, Never>) {
+    func showSearchViewController(_ subject: PassthroughSubject<SearchQuery, Never>) {
         
         guard
-            let dependency = dependency as? MainDependency,
-            let fetchSearchLogUseCase = dependency.makeFetchSearchLogUseCase(),
-            let deleteSearchLogUseCase = dependency.makeDeleteSearchLogUseCase(),
-            let updateSearchLogUseCase = dependency.makeUpdateSearchLogUseCase()
+            let fetchSearchLogUseCase = dependency?.makeFetchSearchLogUseCase(),
+            let deleteSearchLogUseCase = dependency?.makeDeleteSearchLogUseCase(),
+            let updateSearchLogUseCase = dependency?.makeUpdateSearchLogUseCase()
         else {
             return
         }
@@ -57,7 +51,7 @@ final public class MainCoordinator: Coordinator {
             fetchSearchUseCase: fetchSearchLogUseCase,
             deleteSearchUseCase: deleteSearchLogUseCase,
             updateSearchUseCase: updateSearchLogUseCase,
-            willSearchText: subject
+            searchInput: subject
         )
         viewModel.coordinator = self
         

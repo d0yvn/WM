@@ -20,7 +20,7 @@ final public class MainViewModel: ViewModelType {
     private let searchWebDocumentUseCase: SearchWebDocumentUseCase
     
     struct Input {
-        let showSearchView: AnyPublisher<Void, Never>
+        let searchViewTrigger: AnyPublisher<Void, Never>
         let showDetailView: AnyPublisher<String, Never>
     }
     
@@ -30,9 +30,9 @@ final public class MainViewModel: ViewModelType {
     
     var cancellable: Set<AnyCancellable> = []
     
-    private let subject = CurrentValueSubject<SearchQuery, Never>(SearchQuery(keyword: "", isHistory: false))
+    private let searchInput = PassthroughSubject<SearchQuery, Never>()
     
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: SearchCoordinator?
     
     public init(
         searchMovieUseCase: SearchMovieUseCase,
@@ -48,10 +48,10 @@ final public class MainViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        input.showSearchView
+        input.searchViewTrigger
             .sink { [weak self] in
                 guard let self else { return }
-                self.coordinator?.showSearchViewController(subject: self.subject)
+                self.coordinator?.showSearchViewController(self.searchInput)
             }
             .store(in: &cancellable)
         
@@ -61,18 +61,23 @@ final public class MainViewModel: ViewModelType {
             }
             .store(in: &cancellable)
         
-        subject
+        searchInput
             .sink { [weak self] _ in
                 self?.coordinator?.popViewController()
             }
             .store(in: &cancellable)
         
-        let dataSource = searchWebDocumentUseCase.execute(keyword: "korea", offset: 1, count: 10, isConnected: true)
-            .map { items -> [DataSource] in
+        let dataSource = searchInput
+            .withUnretained(self)
+            .flatMap { owner, query in
+                owner.searchWebDocumentUseCase.execute(keyword: query.keyword, offset: 1, count: 10, isConnected: query.isNetworking)
+            }
+            .withUnretained(self)
+            .map { owner, items -> [DataSource] in
                 let result = items.map {
                     SearchResultSection.Item.webDocument($0)
                 }
-                return self.generateTabItems() + [[.webDocument: result]]
+                return owner.generateTabItems() + [[.webDocument: result]]
             }
             .assertNoFailure()
             .eraseToAnyPublisher()
