@@ -23,14 +23,22 @@ final class SearchTabViewCell: BaseCollectionViewCell {
         didSet { selectedUpdate() }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.titleLabel.text = nil
+    }
+    
     override func configureHierarchy() {
         self.contentView.addSubview(titleLabel)
     }
     
     override func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -offset),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: offset),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -offset)
         ])
     }
     

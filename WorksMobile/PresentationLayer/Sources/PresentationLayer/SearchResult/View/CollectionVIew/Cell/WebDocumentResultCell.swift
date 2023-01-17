@@ -33,6 +33,13 @@ final class WebDocumentResultCell: BaseCollectionViewCell {
     
     private lazy var dividerView = DividerView()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.titleLabel.text = nil
+        self.descriptionLabel.text = nil
+    }
+    
     override func configureHierarchy() {
         contentView.addSubviews([
             titleLabel,
