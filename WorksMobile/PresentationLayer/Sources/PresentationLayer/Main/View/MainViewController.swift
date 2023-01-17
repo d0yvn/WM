@@ -24,6 +24,8 @@ public final class MainViewController: BaseViewController {
         return adapter
     }()
     
+    private lazy var placeholderView = PlaceHolderView(status: .notStart)
+    
     private lazy var searchBarView = WMSearchView(type: .icon)
     
     private let webLinkSubject = PassthroughSubject<String, Never>()
@@ -42,7 +44,8 @@ public final class MainViewController: BaseViewController {
     public override func configureHierarchy() {
         self.view.addSubviews([
             searchBarView,
-            collectionView
+            collectionView,
+            placeholderView
         ])
     }
     
@@ -59,6 +62,13 @@ public final class MainViewController: BaseViewController {
             collectionView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            placeholderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeholderView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor),
+            placeholderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -78,13 +88,19 @@ public final class MainViewController: BaseViewController {
         
         output.dataSource
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] dataSource in
-                self?.collectionViewAdapter.apply(dataSource)
-            }
+            .sink(
+                receiveCompletion: { _ in
+                    self.placeholderView.isHidden = false
+                    self.placeholderView.updateDescriptionText(.fail)
+                }, receiveValue: { [weak self] dataSource in
+                    self?.placeholderView.isHidden = true
+                    self?.collectionViewAdapter.apply(dataSource)
+                }
+            )
             .store(in: &cancellable)
     }
     
-    func configureTapGesture() {
+    private func configureTapGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         self.searchBarView.addGestureRecognizer(tap)
     }
