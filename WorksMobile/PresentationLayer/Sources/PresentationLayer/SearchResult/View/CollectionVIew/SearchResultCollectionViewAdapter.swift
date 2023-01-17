@@ -55,6 +55,10 @@ final class SearchResultCollectionViewAdapter: NSObject {
             self?.updateLayout()
         })
     }
+    
+    func scrollEnabled(_ isEnabled: Bool) {
+        collectionView.isScrollEnabled = isEnabled
+    }
 }
 
 // MARK: - Private Configure
