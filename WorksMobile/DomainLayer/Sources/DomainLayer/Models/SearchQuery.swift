@@ -9,10 +9,10 @@ import Foundation
 
 public struct SearchQuery {
     public let keyword: String
-    public let isHistory: Bool
+    public let isNetworking: Bool
     
     public init(keyword: String, isHistory: Bool) {
         self.keyword = keyword
-        self.isHistory = isHistory
+        self.isNetworking = isHistory
     }
 }
