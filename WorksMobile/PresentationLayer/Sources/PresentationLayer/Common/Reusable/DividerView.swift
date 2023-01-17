@@ -9,13 +9,13 @@ import UIKit
 
 final class DividerView: BaseView {
     
-    init() {
+    init(color: UIColor = .systemGray, height: CGFloat = 0.5) {
         super.init(frame: .zero)
         
-        self.backgroundColor = .lightGray
+        self.backgroundColor = color
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.heightAnchor.constraint(equalToConstant: 0.5)
+            self.heightAnchor.constraint(equalToConstant: height)
         ])
     }
 }
