@@ -74,6 +74,9 @@ final class MovieResultCell: BaseCollectionViewCell {
         super.prepareForReuse()
         
         self.imageView.image = nil
+        self.titleLabel.text = nil
+        self.pubDateLabel.text = nil
+        self.actorLabel.text = nil
     }
     
     override func configureHierarchy() {

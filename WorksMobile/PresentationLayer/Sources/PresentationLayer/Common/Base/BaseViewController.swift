@@ -68,9 +68,8 @@ extension BaseViewController {
     private func createIndicator() -> UIActivityIndicatorView {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.backgroundColor = .black.withAlphaComponent(0.7)
-        indicator.color = .white
-        indicator.layer.cornerRadius = 20
+        indicator.backgroundColor = .clear
+        indicator.color = .black
         return indicator
     }
 }

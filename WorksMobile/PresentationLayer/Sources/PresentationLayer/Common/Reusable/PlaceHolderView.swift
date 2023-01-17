@@ -62,7 +62,8 @@ final class PlaceHolderView: BaseView {
         ])
     }
     
-    func updateDescriptionText(_ status: PlaceHolderStatus) {
+    func updateDescription(_ status: PlaceHolderStatus) {
+        self.isHidden = false
         self.descriptionLabel.text = status.title
     }
 }
