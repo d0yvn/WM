@@ -104,11 +104,12 @@ extension SearchResultViewController {
         case .none(let dataSource):
             self.collectionViewAdapter.apply(dataSource)
             self.placeholderView.updateDescription(.notStart)
+            self.collectionViewAdapter.scrollEnabled(false)
         case .fetching:
             self.placeholderView.isHidden = true
             self.showFullSizeIndicator()
         case .success(let dataSource):
-            self.placeholderView.isHidden = true
+            self.collectionViewAdapter.scrollEnabled(true)
             self.collectionViewAdapter.apply(dataSource)
             self.hideFullSizeIndicator()
         case .failure:
