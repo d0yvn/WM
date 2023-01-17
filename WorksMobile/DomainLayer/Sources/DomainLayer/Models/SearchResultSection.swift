@@ -9,9 +9,9 @@ import Foundation
 
 public enum SearchResultSection: Int, CaseIterable {
     case tab = 0
-    case movie
-    case blog
     case image
+    case blog
+    case movie
     case webDocument
     
     public var title: String? {
