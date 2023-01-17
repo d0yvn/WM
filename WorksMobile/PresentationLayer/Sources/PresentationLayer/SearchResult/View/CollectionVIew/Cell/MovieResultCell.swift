@@ -132,7 +132,7 @@ final class MovieResultCell: BaseCollectionViewCell {
         NSLayoutConstraint.activate([
             actorLabel.leadingAnchor.constraint(equalTo: actorDefaultLabel.trailingAnchor, constant: offset),
             actorLabel.trailingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: -offset),
-            actorLabel.centerYAnchor.constraint(equalTo: actorDefaultLabel.centerYAnchor)
+            actorLabel.topAnchor.constraint(equalTo: actorDefaultLabel.topAnchor)
         ])
         
         actorLabel.text = actor.components(separatedBy: "|")
