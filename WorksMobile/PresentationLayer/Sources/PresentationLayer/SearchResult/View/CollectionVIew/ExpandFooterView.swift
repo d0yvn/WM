@@ -31,6 +31,7 @@ final class ExpandFooterView: BaseCollectionReusableView {
         super.prepareForReuse()
         
         moreButton.setTitle(nil, for: .normal)
+        self.backgroundColor = .lightGray.withAlphaComponent(0.3)
     }
     
     override func configureAttributes() {
@@ -48,9 +49,7 @@ final class ExpandFooterView: BaseCollectionReusableView {
             moreButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
-        guard let title = section.title else {
-            return
-        }
+        guard let title = section.title else { return }
         moreButton.setTitle("\(title) 더 보기.", for: .normal)
     }
     

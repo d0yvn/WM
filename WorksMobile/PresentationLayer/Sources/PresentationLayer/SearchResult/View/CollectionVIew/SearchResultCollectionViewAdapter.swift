@@ -134,7 +134,7 @@ extension SearchResultCollectionViewAdapter {
                     return .init()
                 }
                 
-                guard let section = self.dataSource?.sectionIdentifier(for: indexPath.section) else {
+                guard let section = self.dataSource?.sectionIdentifier(for: indexPath.section), section.title != nil else {
                     return footerView
                 }
                 
