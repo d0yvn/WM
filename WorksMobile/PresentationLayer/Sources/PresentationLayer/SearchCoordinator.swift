@@ -51,7 +51,7 @@ final public class SearchCoordinator: Coordinator {
             fetchSearchUseCase: fetchSearchLogUseCase,
             deleteSearchUseCase: deleteSearchLogUseCase,
             updateSearchUseCase: updateSearchLogUseCase,
-            searchText: subject
+            searchInput: subject
         )
         viewModel.coordinator = self
         

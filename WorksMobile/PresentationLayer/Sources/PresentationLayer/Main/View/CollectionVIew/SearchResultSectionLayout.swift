@@ -62,12 +62,12 @@ public enum SearchResultSectionLayout: Int, CaseIterable {
     
     private func generateWebDocumentLayout(isCard: Bool) -> NSCollectionLayoutSection {
         let widthRatio = isCard ? 0.5 : 1.0
-        let item = CompositionalLayout.createItem(width: .fractionalWidth(1.0), height: .estimated(offset * 5))
+        let item = CompositionalLayout.createItem(width: .fractionalWidth(1.0), height: .fractionalHeight(1.0))
         
         let group = CompositionalLayout.createGroup(
             alignment: .horizontal,
             width: .fractionalWidth(widthRatio),
-            height: .fractionalHeight(1.0),
+            height: .estimated(offset * 5),
             items: [item]
         )
         

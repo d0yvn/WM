@@ -24,9 +24,10 @@ public final class MainViewController: BaseViewController {
         return adapter
     }()
     
-    private lazy var searchBarView = WMSearchView(status: .icon)
+    private lazy var searchBarView = WMSearchView(type: .icon)
     
     private let webLinkSubject = PassthroughSubject<String, Never>()
+    private let searchViewTrigger = PassthroughSubject<Void, Never>()
     // MARK: - LifeCycle
     public init(viewModel: MainViewModel) {
         self.viewModel = viewModel
@@ -36,7 +37,6 @@ public final class MainViewController: BaseViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = "통합"
-        navigationController?.hidesBarsOnSwipe = true
     }
     
     public override func configureHierarchy() {
@@ -63,12 +63,15 @@ public final class MainViewController: BaseViewController {
     }
     
     public override func configureAttributes() {
+        configureTapGesture()
+        searchBarView.configure(.icon)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     public override func bind() {
+        
         let input = MainViewModel.Input(
-            showSearchView: Just(Void()).eraseToAnyPublisher(),
+            searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
             showDetailView: webLinkSubject.eraseToAnyPublisher()
         )
         let output = viewModel.transform(input: input)
@@ -79,6 +82,15 @@ public final class MainViewController: BaseViewController {
                 self?.collectionViewAdapter.apply(dataSource)
             }
             .store(in: &cancellable)
+    }
+    
+    func configureTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        self.searchBarView.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
+        searchViewTrigger.send(Void())
     }
 }
 
