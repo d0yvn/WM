@@ -35,20 +35,22 @@ final class WMSearchView: BaseView {
     lazy var logoButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemGray
+        button.setImage(UIImage(systemName: "arrow.backward")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    lazy var searchButton: UIButton = {
+    private lazy var searchButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemGreen
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        let image = UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
+        button.setImage(image, for: .normal)
         button.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "검색어 입력"
         textField.font = .systemFont(ofSize: 16)
@@ -59,27 +61,26 @@ final class WMSearchView: BaseView {
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
         
-        button.backgroundColor = .lightGray
-        button.tintColor = .white
-        button.layer.cornerRadius = self.offset
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.isUserInteractionEnabled = false
+        var configuration = UIButton.Configuration.filled()
+        configuration.baseBackgroundColor = .lightGray
+        configuration.baseForegroundColor = .white
+        
+        let image = UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .small))
+        configuration.image = image
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        configuration.cornerStyle = .dynamic
+        
+        button.configuration = configuration
+        button.layer.cornerRadius = offset
         button.alpha = 0
         button.clipsToBounds = true
         button.contentMode = .scaleAspectFit
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var divier: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGreen
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    
+    private lazy var divier = DividerView(color: .systemGreen, height: 1)
     
     init(type: ViewType) {
         self.type = type
@@ -134,8 +135,7 @@ final class WMSearchView: BaseView {
         NSLayoutConstraint.activate([
             divier.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             divier.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            divier.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            divier.heightAnchor.constraint(equalToConstant: 1)
+            divier.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
@@ -159,10 +159,13 @@ final class WMSearchView: BaseView {
             }
             .store(in: &cancellable)
         
-        textField.shouldReturnPublisher
+        searchButton
+            .tapPublisher
+            .merge(with: textField.shouldReturnPublisher)
             .compactMap { [weak self] in
                 self?.textField.text
             }
+            .filter { !$0.isEmpty }
             .sink { [weak self] in
                 self?.searchSubject.send($0)
             }
@@ -200,5 +203,9 @@ extension WMSearchView {
         self.textField.text = text
         
         configureDeleteButton(!text.isEmpty)
+    }
+    
+    func updateReponder() {
+        self.textField.becomeFirstResponder()
     }
 }

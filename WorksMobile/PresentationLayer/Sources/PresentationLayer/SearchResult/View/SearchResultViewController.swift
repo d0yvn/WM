@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  SearchResultViewController.swift
 //  WorksMobile
 //
 //  Created by USER on 2023/01/06.
@@ -9,10 +9,10 @@ import Combine
 import UIKit
 import Utils
 
-public final class MainViewController: BaseViewController {
+public final class SearchResultViewController: BaseViewController {
     
     // MARK: - Properties
-    private let viewModel: MainViewModel
+    private let viewModel: SearchResultViewModel
     
     private lazy var collectionView: UICollectionView = {
         return UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -31,7 +31,7 @@ public final class MainViewController: BaseViewController {
     private let webLinkSubject = PassthroughSubject<String, Never>()
     private let searchViewTrigger = PassthroughSubject<Void, Never>()
     // MARK: - LifeCycle
-    public init(viewModel: MainViewModel) {
+    public init(viewModel: SearchResultViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -80,7 +80,7 @@ public final class MainViewController: BaseViewController {
     
     public override func bind() {
         
-        let input = MainViewModel.Input(
+        let input = SearchResultViewModel.Input(
             searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
             showDetailView: webLinkSubject.eraseToAnyPublisher()
         )
@@ -110,7 +110,7 @@ public final class MainViewController: BaseViewController {
     }
 }
 
-extension MainViewController: SearchResultCollectionViewAdapterDelegate {
+extension SearchResultViewController: SearchResultCollectionViewAdapterDelegate {
     func showDetailView(with link: String) {
         self.webLinkSubject.send(link)
     }

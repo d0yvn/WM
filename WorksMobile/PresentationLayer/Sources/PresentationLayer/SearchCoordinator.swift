@@ -32,7 +32,7 @@ final public class SearchCoordinator: Coordinator {
         
         viewModel.coordinator = self
         
-        let viewController = MainViewController(viewModel: viewModel)
+        let viewController = SearchResultViewController(viewModel: viewModel)
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(viewController, animated: true)
     }

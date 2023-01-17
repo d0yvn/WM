@@ -9,7 +9,7 @@ import Combine
 import DomainLayer
 
 public protocol SearchDependency: AnyObject {
-    func makeMainViewModel() -> MainViewModel?
+    func makeMainViewModel() -> SearchResultViewModel?
     func makeFetchSearchLogUseCase() -> FetchSearchLogUseCase?
     func makeDeleteSearchLogUseCase() -> DeleteSearchLogUseCase?
     func makeUpdateSearchLogUseCase() -> UpdateSearchLogUseCase?

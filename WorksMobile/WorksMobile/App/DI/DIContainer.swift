@@ -121,8 +121,8 @@ private extension DIContainer {
             return
         }
         
-        container.register(MainViewModel.self) { _ in
-            MainViewModel(
+        container.register(SearchResultViewModel.self) { _ in
+            SearchResultViewModel(
                 searchMovieUseCase: searchMovieUseCase,
                 searchImageUseCase: searchImageUseCase,
                 searchBlogUseCase: searchBlogUseCase,
