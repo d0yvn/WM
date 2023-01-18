@@ -96,6 +96,12 @@ public final class SearchResultViewController: BaseViewController {
                 self?.handleState($0)
             }
             .store(in: &cancellable)
+        
+        output.searchText
+            .sink { [weak self] in
+                self?.searchBarView.updateTextField($0)
+            }
+            .store(in: &cancellable)
     }
 }
 
