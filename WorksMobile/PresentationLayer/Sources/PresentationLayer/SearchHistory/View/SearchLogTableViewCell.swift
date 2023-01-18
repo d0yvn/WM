@@ -32,7 +32,16 @@ final public class SearchLogTableViewCell: BaseTableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.text = "검색 히스토리"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 12, weight: .semibold)
         label.text = "검색 히스토리"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,7 +49,8 @@ final public class SearchLogTableViewCell: BaseTableViewCell {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .regular, scale: .medium)
+        button.setImage(UIImage(systemName: "xmark", withConfiguration: config), for: .normal)
         button.tintColor = .gray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -54,6 +64,7 @@ final public class SearchLogTableViewCell: BaseTableViewCell {
         self.contentView.addSubviews([
             searchImageView,
             titleLabel,
+            dateLabel,
             deleteButton
         ])
     }
@@ -61,7 +72,7 @@ final public class SearchLogTableViewCell: BaseTableViewCell {
     public override func configureConstraints() {
         
         NSLayoutConstraint.activate([
-            searchImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset * 2),
+            searchImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset),
             searchImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             searchImageView.widthAnchor.constraint(equalToConstant: self.offset * 3),
             searchImageView.heightAnchor.constraint(equalToConstant: self.offset * 3)
@@ -74,13 +85,19 @@ final public class SearchLogTableViewCell: BaseTableViewCell {
         
         NSLayoutConstraint.activate([
             deleteButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset * 2)
+            deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset)
+        ])
+        
+        NSLayoutConstraint.activate([
+            dateLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            dateLabel.trailingAnchor.constraint(equalTo: deleteButton.leadingAnchor, constant: -offset)
         ])
     }
     
     public func configure(searchLog: SearchLog) {
         self.searchLog = searchLog
         self.titleLabel.text = searchLog.keyword
+        self.dateLabel.text = searchLog.latestDate.toString(type: .monthAndDate2)
     }
     
     public override func bind() {
