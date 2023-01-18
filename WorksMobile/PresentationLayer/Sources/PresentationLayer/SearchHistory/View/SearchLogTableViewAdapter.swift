@@ -24,7 +24,6 @@ final class SearchLogTableViewAdapter: NSObject {
     }
     
     private let rowHeight: CGFloat = 40
-    private let headerHeight: CGFloat = 40
     
     private var dataSource: DataSource?
     private var tableView: UITableView
@@ -44,6 +43,8 @@ final class SearchLogTableViewAdapter: NSObject {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.rowHeight = rowHeight
+        tableView.sectionHeaderTopPadding = 0.0
+        tableView.sectionHeaderHeight = tableView.offset * 5
         tableView.register(SearchLogTableViewCell.self)
         tableView.register(SearchLogTableHeaderView.self)
     }
@@ -83,9 +84,7 @@ extension SearchLogTableViewAdapter {
 extension SearchLogTableViewAdapter: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = self.dataSource?.itemIdentifier(for: indexPath) else {
-            return
-        }
+        guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return }
         delegate?.didTapSearch(with: item.keyword)
     }
 }
