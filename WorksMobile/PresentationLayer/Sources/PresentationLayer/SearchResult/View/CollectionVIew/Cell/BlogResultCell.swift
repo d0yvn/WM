@@ -12,6 +12,12 @@ import Utils
 
 final class BlogResultCell: BaseCollectionViewCell {
     
+    weak var delegate: ExternalBrowserDelegate?
+    
+    private var blog: Blog?
+    
+    private lazy var ellipsisButton = EllipsisButton(tintColor: .gray)
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -61,11 +67,18 @@ final class BlogResultCell: BaseCollectionViewCell {
             descriptionLabel,
             bloggerNameLabel,
             postDateLabel,
-            divider
+            divider,
+            ellipsisButton
         ])
     }
     
     override func configureConstraints() {
+        
+        NSLayoutConstraint.activate([
+            ellipsisButton.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            ellipsisButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset)
+        ])
+        
         NSLayoutConstraint.activate([
             bloggerNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: offset),
             bloggerNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: offset)
@@ -95,7 +108,10 @@ final class BlogResultCell: BaseCollectionViewCell {
         ])
     }
     
-    func configure(with item: Blog) {
+    func configure(with item: Blog, delegate: ExternalBrowserDelegate?) {
+        self.blog = item
+        self.delegate = delegate
+        
         self.titleLabel.text = item.title
         self.bloggerNameLabel.text = "\(item.bloggerName) |"
         self.descriptionLabel.text = item.description
@@ -103,5 +119,17 @@ final class BlogResultCell: BaseCollectionViewCell {
         let postDate = item.postDate.toDate(type: .yearAndMonthandDate3)?.toString(type: .yearAndMonthandDate2) ?? item.postDate
         
         self.postDateLabel.text = postDate
+    }
+    
+    override func bind() {
+        ellipsisButton.tapPublisher
+            .compactMap { [weak self] _ in
+                self?.blog?.link
+            }
+            .sink { [weak self] in
+                Logger.print($0)
+                self?.delegate?.showExternalBrowser($0)
+            }
+            .store(in: &cancellable)
     }
 }

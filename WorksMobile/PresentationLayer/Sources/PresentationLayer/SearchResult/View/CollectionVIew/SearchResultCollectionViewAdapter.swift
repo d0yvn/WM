@@ -12,7 +12,8 @@ import UIKit
 
 protocol SearchResultCollectionViewAdapterDelegate: AnyObject {
     func updateNavigationTitle(with title: String)
-    func showDetailView(with link: String)
+    func showInAppBrowser(with link: String)
+    func showExternalBroswer(with link: String)
 }
 
 final class SearchResultCollectionViewAdapter: NSObject {
@@ -86,25 +87,25 @@ extension SearchResultCollectionViewAdapter {
                 guard let cell = collectionView.dequeueCell(MovieResultCell.self, for: indexPath) else {
                     return .init()
                 }
-                cell.configure(with: item)
+                cell.configure(with: item, delegate: self)
                 return cell
             case let .blog(item):
                 guard let cell = collectionView.dequeueCell(BlogResultCell.self, for: indexPath) else {
                     return .init()
                 }
-                cell.configure(with: item)
+                cell.configure(with: item, delegate: self)
                 return cell
             case let .image(item):
                 guard let cell = collectionView.dequeueCell(ImageResultCell.self, for: indexPath) else {
                     return .init()
                 }
-                cell.configure(with: item)
+                cell.configure(with: item, delegate: self)
                 return cell
             case let .webDocument(item):
                 guard let cell = collectionView.dequeueCell(WebDocumentResultCell.self, for: indexPath) else {
                     return .init()
                 }
-                cell.configure(with: item)
+                cell.configure(with: item, delegate: self)
                 return cell
             case let .tab(item):
                 guard let cell = collectionView.dequeueCell(SearchTabViewCell.self, for: indexPath) else {
@@ -166,13 +167,13 @@ extension SearchResultCollectionViewAdapter: UICollectionViewDelegate {
         case let .tab(item):
             self.updateTabStatus(tab: item)
         case let .movie(item):
-            self.delegate?.showDetailView(with: item.link)
+            self.delegate?.showInAppBrowser(with: item.link)
         case let .blog(item):
-            self.delegate?.showDetailView(with: item.link)
+            self.delegate?.showInAppBrowser(with: item.link)
         case let .image(item):
-            self.delegate?.showDetailView(with: item.link)
+            self.delegate?.showInAppBrowser(with: item.link)
         case let .webDocument(item):
-            self.delegate?.showDetailView(with: item.link)
+            self.delegate?.showInAppBrowser(with: item.link)
         default:
             return
         }
@@ -222,5 +223,12 @@ extension SearchResultCollectionViewAdapter: ExpandFooterViewDelegate {
         tabStatus.send(tab)
         let selectedIndexPath = IndexPath(item: rawValue, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
+    }
+}
+
+// MARK: - ExternalBrowserDelegate
+extension SearchResultCollectionViewAdapter: ExternalBrowserDelegate {
+    func showExternalBrowser(_ link: String) {
+        delegate?.showExternalBroswer(with: link)
     }
 }

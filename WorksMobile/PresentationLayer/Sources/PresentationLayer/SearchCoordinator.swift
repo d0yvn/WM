@@ -9,6 +9,7 @@ import Combine
 import DomainLayer
 import UIKit
 import Utils
+import SafariServices
 
 final public class SearchCoordinator: Coordinator {
     
@@ -60,7 +61,15 @@ final public class SearchCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: false)
     }
     
-    func showDetailViewController(_ link: String) {
-        Logger.print(link)
+    func showInAppViewController(_ link: String) {
+        guard let url = URL(string: link) else { return }
+        
+        let safariViewController = SFSafariViewController(url: url)
+        navigationController.present(safariViewController, animated: true)
+    }
+    
+    func showExternalViewController(_ link: String) {
+        guard let url = URL(string: link) else { return }
+        UIApplication.shared.open(url)
     }
 }

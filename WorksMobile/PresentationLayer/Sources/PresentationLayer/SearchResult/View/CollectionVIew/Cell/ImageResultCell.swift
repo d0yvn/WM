@@ -12,6 +12,12 @@ import Utils
 
 final class ImageResultCell: BaseCollectionViewCell {
     
+    weak var delegate: ExternalBrowserDelegate?
+    
+    private var image: Image?
+    
+    private lazy var ellipsisButton = EllipsisButton(tintColor: .white)
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -36,7 +42,7 @@ final class ImageResultCell: BaseCollectionViewCell {
     }
     
     override func configureHierarchy() {
-        self.contentView.addSubviews([imageView])
+        self.contentView.addSubviews([imageView, ellipsisButton])
     }
     
     override func configureConstraints() {
@@ -46,9 +52,28 @@ final class ImageResultCell: BaseCollectionViewCell {
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            ellipsisButton.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            ellipsisButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset)
+        ])
     }
     
-    func configure(with item: Image) {
+    func configure(with item: Image, delegate: ExternalBrowserDelegate?) {
+        self.image = item
+        self.delegate = delegate
+        
         imageView.setImage(with: item.thumbnail, size: frame.size)
+    }
+    
+    override func bind() {
+        ellipsisButton.tapPublisher
+            .compactMap { [weak self] _ in
+                self?.image?.link
+            }
+            .sink { [weak self] in
+                self?.delegate?.showExternalBrowser($0)
+            }
+            .store(in: &cancellable)
     }
 }
