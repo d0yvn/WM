@@ -11,12 +11,12 @@ import Kingfisher
 
 final class MovieResultCell: BaseCollectionViewCell {
     
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
+    private lazy var imageView: ResizableImageView = {
+        let imageView = ResizableImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 8
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 2
         imageView.backgroundColor = .white
         return imageView
     }()
@@ -70,6 +70,25 @@ final class MovieResultCell: BaseCollectionViewCell {
         return label
     }()
     
+    private lazy var partitionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 12)
+        label.text = "|"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var ratingLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -83,19 +102,30 @@ final class MovieResultCell: BaseCollectionViewCell {
         self.contentView.addSubviews([
             imageView,
             titleLabel,
+            partitionLabel,
+            ratingLabel,
             pubDateDefaultLabel,
             pubDateLabel
         ])
     }
     
     override func configureConstraints() {
+        
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: offset),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: offset)
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset * 1.5),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: offset * 1.5),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -offset * 1.5),
+            imageView.widthAnchor.constraint(equalToConstant: offset * 8)
         ])
         
         NSLayoutConstraint.activate([
-            pubDateDefaultLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: offset),
+            titleLabel.trailingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: -offset * 1.5),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: offset * 1.5),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: offset * 1.5)
+        ])
+        
+        NSLayoutConstraint.activate([
+            pubDateDefaultLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: offset * 1.5),
             pubDateDefaultLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: offset)
         ])
         
@@ -105,20 +135,21 @@ final class MovieResultCell: BaseCollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: offset),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -offset),
-            imageView.widthAnchor.constraint(equalToConstant: offset * 15)
+            partitionLabel.centerYAnchor.constraint(equalTo: pubDateDefaultLabel.centerYAnchor),
+            partitionLabel.leadingAnchor.constraint(equalTo: pubDateLabel.trailingAnchor, constant: 4)
+        ])
+        
+        NSLayoutConstraint.activate([
+            ratingLabel.leadingAnchor.constraint(equalTo: partitionLabel.trailingAnchor, constant: 4),
+            ratingLabel.centerYAnchor.constraint(equalTo: pubDateDefaultLabel.centerYAnchor)
         ])
     }
     
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
-        
-        let processor = DownsamplingImageProcessor(size: CGSize(width: offset * 15, height: offset * 15)) |> RoundCornerImageProcessor(cornerRadius: 8)
-        imageView.kf.setImage(with: URL(string: movie.image), options: [.processor(processor)])
+        imageView.setImage(with: movie.image, size: frame.size)
         pubDateLabel.text = movie.pubDate
-        
+        ratingLabel.text = "⭐ \(movie.userRating)"
         if !movie.actor.isEmpty {
             configureActorLabel(with: movie.actor)
         }
@@ -141,5 +172,11 @@ final class MovieResultCell: BaseCollectionViewCell {
         actorLabel.text = actor.components(separatedBy: "|")
             .filter { !$0.isEmpty }
             .joined(separator: ", ")
+    }
+    
+    override func configureAttributes() {
+        self.contentView.layer.cornerRadius = 6
+        self.contentView.layer.borderColor = UIColor.systemGray6.cgColor
+        self.contentView.layer.borderWidth = 1
     }
 }

@@ -24,7 +24,7 @@ final class WebDocumentResultCell: BaseCollectionViewCell {
         label.textColor = .black
         label.font = .systemFont(ofSize: 14)
         label.text = "제목"
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false

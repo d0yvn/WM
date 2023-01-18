@@ -17,7 +17,7 @@ public struct WithoutHTML: Hashable {
             self.value
         }
         set {
-            self.value = removeHTMLTag(newValue)
+            self.value = removeHTMLTag(newValue).replaceSpeacialCharacters()
         }
     }
     

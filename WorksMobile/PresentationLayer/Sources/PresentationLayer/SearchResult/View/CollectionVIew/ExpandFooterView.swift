@@ -22,7 +22,7 @@ final class ExpandFooterView: BaseCollectionReusableView {
     private lazy var moreButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .light)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -30,12 +30,12 @@ final class ExpandFooterView: BaseCollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        moreButton.setTitle(nil, for: .normal)
-        self.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        moreButton.removeFromSuperview()
+        self.backgroundColor = .systemGray6
     }
     
     override func configureAttributes() {
-        self.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        self.backgroundColor = .systemGray6
         
         self.layer.addBorder([.bottom, .top], color: .gray.withAlphaComponent(0.1), borderWidth: 0.5)
     }
@@ -50,7 +50,7 @@ final class ExpandFooterView: BaseCollectionReusableView {
         ])
         
         guard let title = section.title else { return }
-        moreButton.setTitle("\(title) 더 보기.", for: .normal)
+        moreButton.setTitle("\(title) 더보기 →", for: .normal)
     }
     
     override func bind() {

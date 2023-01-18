@@ -2,15 +2,13 @@ excluded:
   - ${PWD}/Carthage
   - ${PWD}/Pods
   - ${PWD}/DerivedData
-  - Tuist
   - Frameworks
   - Project
-  - ./**/*API.swift
   - ./**/AppDelegate.swift
   - ./**/SceneDelegate.swift
-  - Plugins
   - Project.swift
-  - ./TrinapTests
+  - ./WorksMobileTests
+  - ./WorksMobileUITests
 
 disabled_rules:
   - discarded_notification_center_observer
@@ -21,6 +19,8 @@ disabled_rules:
   - empty_count
   - line_length
   - nesting
+  - type_name
+  - cyclomatic_complexity
   
 opt_in_rules:
   - array_init
@@ -61,7 +61,6 @@ opt_in_rules:
   - vertical_whitespace_closing_braces
   - yoda_condition
 
-
 custom_rules:
   array_constructor:
     name: "Array/Dictionary initializer"
@@ -82,7 +81,7 @@ force_cast: error
 force_try: error
 force_unwrapping: error
 function_body_length:
-    warning: 60
+    warning: 70
 
 legacy_hashing: error
 
@@ -96,11 +95,6 @@ identifier_name:
 
 indentation_width:
   indentation_width: 4
-
-line_length:
-  ignores_urls: true
-  ignores_function_declarations: true
-  ignores_comments: true
 
 multiline_arguments:
   first_argument_location: next_line
