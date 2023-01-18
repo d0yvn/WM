@@ -109,7 +109,7 @@ extension SearchResultSectionLayout {
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 4, trailing: 2)
         
         let group = CompositionalLayout.createGroup(
-            alignment: .vertical,
+            alignment: .horizontal,
             width: .fractionalWidth(1.0),
             height: .fractionalHeight(0.3),
             item: item,
