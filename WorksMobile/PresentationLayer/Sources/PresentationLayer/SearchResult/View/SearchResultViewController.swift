@@ -86,7 +86,7 @@ public final class SearchResultViewController: BaseViewController {
         let input = SearchResultViewModel.Input(
             tabStatus: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
             searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
-            showDetailView: browserSubject.eraseToAnyPublisher()
+            showDetailView: browserLinkSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
