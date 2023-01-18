@@ -28,7 +28,7 @@ public final class SearchResultViewController: BaseViewController {
     
     private lazy var searchBarView = WMSearchView(type: .icon)
     
-    private let webLinkSubject = PassthroughSubject<String, Never>()
+    private let browserLinkSubject = PassthroughSubject<SearchResultViewModel.BrowserType, Never>()
     private let searchViewTrigger = PassthroughSubject<Void, Never>()
     
     // MARK: - LifeCycle
@@ -86,7 +86,7 @@ public final class SearchResultViewController: BaseViewController {
         let input = SearchResultViewModel.Input(
             tabStatus: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
             searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
-            showDetailView: webLinkSubject.eraseToAnyPublisher()
+            showDetailView: browserSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -137,8 +137,12 @@ extension SearchResultViewController {
 
 // MARK: - SearchResultCollectionViewAdapterDelegate
 extension SearchResultViewController: SearchResultCollectionViewAdapterDelegate {
-    func showDetailView(with link: String) {
-        self.webLinkSubject.send(link)
+    func showInAppBrowser(with link: String) {
+        self.browserLinkSubject.send(.inApp(link))
+    }
+    
+    func showExternalBroswer(with link: String) {
+        self.browserLinkSubject.send(.external(link))
     }
     
     func updateNavigationTitle(with title: String) {
