@@ -11,6 +11,12 @@ import Kingfisher
 
 final class MovieResultCell: BaseCollectionViewCell {
     
+    private weak var delegate: ExternalBrowserDelegate?
+    
+    private var movie: Movie?
+    
+    private lazy var ellipsisButton = EllipsisButton(tintColor: .white)
+    
     private lazy var imageView: ResizableImageView = {
         let imageView = ResizableImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,16 +111,17 @@ final class MovieResultCell: BaseCollectionViewCell {
             partitionLabel,
             ratingLabel,
             pubDateDefaultLabel,
-            pubDateLabel
+            pubDateLabel,
+            ellipsisButton
         ])
     }
     
     override func configureConstraints() {
         
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset * 1.5),
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: offset * 1.5),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -offset * 1.5),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -offset),
             imageView.widthAnchor.constraint(equalToConstant: offset * 8)
         ])
         
@@ -143,13 +150,22 @@ final class MovieResultCell: BaseCollectionViewCell {
             ratingLabel.leadingAnchor.constraint(equalTo: partitionLabel.trailingAnchor, constant: 4),
             ratingLabel.centerYAnchor.constraint(equalTo: pubDateDefaultLabel.centerYAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            ellipsisButton.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            ellipsisButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset)
+        ])
     }
     
-    func configure(with movie: Movie) {
+    func configure(with movie: Movie, delegate: ExternalBrowserDelegate?) {
+        self.movie = movie
+        self.delegate = delegate
+        
         titleLabel.text = movie.title
         imageView.setImage(with: movie.image, size: frame.size)
         pubDateLabel.text = movie.pubDate
         ratingLabel.text = "⭐ \(movie.userRating)"
+        
         if !movie.actor.isEmpty {
             configureActorLabel(with: movie.actor)
         }
@@ -178,5 +194,16 @@ final class MovieResultCell: BaseCollectionViewCell {
         self.contentView.layer.cornerRadius = 6
         self.contentView.layer.borderColor = UIColor.systemGray6.cgColor
         self.contentView.layer.borderWidth = 1
+    }
+    
+    override func bind() {
+        ellipsisButton.tapPublisher
+            .compactMap { [weak self] _ in
+                self?.movie?.link
+            }
+            .sink { [weak self] in
+                self?.delegate?.showExternalBrowser($0)
+            }
+            .store(in: &cancellable)
     }
 }

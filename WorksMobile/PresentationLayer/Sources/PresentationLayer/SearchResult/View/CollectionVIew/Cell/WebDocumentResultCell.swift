@@ -10,6 +10,12 @@ import UIKit
 
 final class WebDocumentResultCell: BaseCollectionViewCell {
     
+    private weak var delegate: ExternalBrowserDelegate?
+    
+    private var webDocument: WebDocument?
+    
+    private lazy var ellipsisButton = EllipsisButton(tintColor: .gray)
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -44,7 +50,8 @@ final class WebDocumentResultCell: BaseCollectionViewCell {
         contentView.addSubviews([
             titleLabel,
             descriptionLabel,
-            dividerView
+            dividerView,
+            ellipsisButton
         ])
     }
     
@@ -66,10 +73,29 @@ final class WebDocumentResultCell: BaseCollectionViewCell {
             dividerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             dividerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            ellipsisButton.topAnchor.constraint(equalTo: topAnchor, constant: offset),
+            ellipsisButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset)
+        ])
     }
     
-    func configure(with item: WebDocument) {
+    func configure(with item: WebDocument, delegate: ExternalBrowserDelegate?) {
+        self.webDocument = item
+        self.delegate = delegate
+        
         titleLabel.text = item.title
         descriptionLabel.text = item.description
+    }
+    
+    override func bind() {
+        ellipsisButton.tapPublisher
+            .compactMap { [weak self] _ in
+                self?.webDocument?.link
+            }
+            .sink { [weak self] in
+                self?.delegate?.showExternalBrowser($0)
+            }
+            .store(in: &cancellable)
     }
 }
