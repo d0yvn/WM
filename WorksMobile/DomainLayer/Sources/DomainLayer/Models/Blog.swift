@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import Utils
 
 public struct Blog: Hashable {
-    public let title: String
+    @WithoutHTML public var title: String
     public let link: String
-    public let description: String
+    @WithoutHTML public var description: String
     public let bloggerName: String
     public let bloggerLink: String
     public let postDate: String

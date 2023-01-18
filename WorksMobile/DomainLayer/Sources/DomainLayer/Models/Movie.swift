@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Utils
 
 public struct Movie: Hashable {
-    public let title: String
+    @WithoutHTML public var title: String
     public let link: String
     public let image: String
     public let subtitle: String
