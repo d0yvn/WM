@@ -158,7 +158,7 @@ extension SearchResultCollectionViewAdapter {
 }
 
 // MARK: - CollectionViewDelegate & UICollectionViewDelegateFlowLayout
-extension SearchResultCollectionViewAdapter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension SearchResultCollectionViewAdapter: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return }
         
