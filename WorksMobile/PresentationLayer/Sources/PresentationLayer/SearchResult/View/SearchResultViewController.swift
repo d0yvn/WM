@@ -84,9 +84,10 @@ public final class SearchResultViewController: BaseViewController {
             .store(in: &cancellable)
         
         let input = SearchResultViewModel.Input(
-            tabStatus: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
+            tabState: collectionViewAdapter.tabStatus.eraseToAnyPublisher(),
             searchViewTrigger: searchViewTrigger.eraseToAnyPublisher(),
-            showDetailView: browserLinkSubject.eraseToAnyPublisher()
+            showDetailView: browserLinkSubject.eraseToAnyPublisher(),
+            paginationTrigger: collectionViewAdapter.paginationTrigger.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -122,6 +123,8 @@ extension SearchResultViewController {
             self.hideFullSizeIndicator()
         case .failure:
             self.placeholderView.updateDescription(.fail)
+        case let .paging(dataSource):
+            self.collectionViewAdapter.appendDataSource(dataSource)
         }
     }
     
