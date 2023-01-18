@@ -17,8 +17,8 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .darkText
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.textColor = .gray
         label.text = "최근 검색어"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -28,7 +28,7 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
         let button = UIButton()
         button.setTitle("전체 삭제", for: .normal)
         button.setTitleColor(.systemGray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -43,12 +43,12 @@ final class SearchLogTableHeaderView: BaseTableViewHeaderFooterView {
     override func configureConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset * 2)
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset * 1.5)
         ])
         
         NSLayoutConstraint.activate([
             deleteAllButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            deleteAllButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset * 2)
+            deleteAllButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset)
         ])
     }
     
