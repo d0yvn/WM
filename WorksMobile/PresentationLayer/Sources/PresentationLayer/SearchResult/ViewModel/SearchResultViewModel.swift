@@ -21,6 +21,11 @@ final public class SearchResultViewModel: ViewModelType {
         case failure
     }
     
+    enum BrowserType {
+        case inApp(_ link: String)
+        case external(_ link: String)
+    }
+    
     // MARK: - UseCase
     private let searchMovieUseCase: SearchMovieUseCase
     private let searchImageUseCase: SearchImageUseCase
@@ -31,7 +36,7 @@ final public class SearchResultViewModel: ViewModelType {
     struct Input {
         let tabStatus: AnyPublisher<SearchTab, Never>
         let searchViewTrigger: AnyPublisher<Void, Never>
-        let showDetailView: AnyPublisher<String, Never>
+        let showDetailView: AnyPublisher<BrowserType, Never>
     }
     
     struct Output {
@@ -70,8 +75,13 @@ final public class SearchResultViewModel: ViewModelType {
             .store(in: &cancellable)
         
         input.showDetailView
-            .sink { [weak self] link in
-                self?.coordinator?.showDetailViewController(link)
+            .sink { [weak self] type in
+                switch type {
+                case let .external(link):
+                    self?.coordinator?.showExternalViewController(link)
+                case let .inApp(link):
+                    self?.coordinator?.showInAppViewController(link)
+                }
             }
             .store(in: &cancellable)
         
