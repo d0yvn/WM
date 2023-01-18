@@ -62,7 +62,7 @@ final class WMSearchView: BaseView {
         let button = UIButton()
         
         var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .lightGray
+        configuration.baseBackgroundColor = .systemGray5
         configuration.baseForegroundColor = .white
         
         let image = UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .regular, scale: .small))
