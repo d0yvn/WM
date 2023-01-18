@@ -22,6 +22,8 @@ final class SearchResultCollectionViewAdapter: NSObject {
     typealias Item = SearchResultSection.Item
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Item> = .init()
+    
     private let collectionView: UICollectionView
     
     weak var delegate: SearchResultCollectionViewAdapterDelegate?
@@ -33,6 +35,7 @@ final class SearchResultCollectionViewAdapter: NSObject {
     }()
     
     let tabStatus = CurrentValueSubject<SearchTab, Never>(.all)
+    let paginationTrigger = PassthroughSubject<Void, Never>()
     
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
@@ -43,7 +46,7 @@ final class SearchResultCollectionViewAdapter: NSObject {
     }
     
     func apply(_ dataSources: [[Section: [Item]]]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
         dataSources.forEach { dataSource in
             dataSource.forEach { key, values in
@@ -57,6 +60,17 @@ final class SearchResultCollectionViewAdapter: NSObject {
         })
     }
     
+    func appendDataSource(_ dataSource: [Section: [Item]]) {
+        guard
+            let section = dataSource.keys.first,
+            let values = dataSource[section]
+        else {
+            return
+        }
+        self.snapshot.appendItems(values, toSection: section)
+        self.dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
     func scrollEnabled(_ isEnabled: Bool) {
         collectionView.isScrollEnabled = isEnabled
     }
@@ -68,6 +82,7 @@ extension SearchResultCollectionViewAdapter {
     private func configureCollectionView() {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
+        
         collectionView.register(BlogResultCell.self)
         collectionView.register(ImageResultCell.self)
         collectionView.register(MovieResultCell.self)
@@ -203,6 +218,17 @@ extension SearchResultCollectionViewAdapter {
     private func configureCollectionViewLayout(_ section: SearchResultSectionLayout, isCard: Bool) -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { index, _ -> NSCollectionLayoutSection? in
             return section.createLayout(section: index, isCard: isCard)
+        }
+    }
+}
+
+// MARK: - UIScrollView
+extension SearchResultCollectionViewAdapter: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        
+        if position > collectionView.contentSize.height - scrollView.frame.height - 100 && self.tabStatus.value != .all {
+            paginationTrigger.send(Void())
         }
     }
 }

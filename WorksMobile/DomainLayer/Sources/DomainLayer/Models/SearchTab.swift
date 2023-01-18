@@ -28,4 +28,15 @@ public enum SearchTab: Int, CaseIterable, Hashable {
             return "웹 문서"
         }
     }
+    
+    public var display: Int {
+        switch self {
+        case .all:
+            return 3
+        case .image:
+            return 20
+        case .blog, .movie, .webDocument:
+            return 10
+        }
+    }
 }
