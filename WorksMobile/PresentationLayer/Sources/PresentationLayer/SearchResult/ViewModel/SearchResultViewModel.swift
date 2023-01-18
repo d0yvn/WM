@@ -36,6 +36,7 @@ final public class SearchResultViewModel: ViewModelType {
     
     struct Output {
         let state: AnyPublisher<State, Never>
+        let searchText: AnyPublisher<String, Never>
     }
     
     var cancellable: Set<AnyCancellable> = []
@@ -97,12 +98,13 @@ final public class SearchResultViewModel: ViewModelType {
                 self?.stateSubject.send(.success(dataSource))
             })
             .store(in: &cancellable)
-            
         
-        return Output(state: self.stateSubject.eraseToAnyPublisher())
+        
+        return Output(
+            state: self.stateSubject.eraseToAnyPublisher(),
+            searchText: self.searchInput.map(\.keyword).eraseToAnyPublisher()
+        )
     }
-    
-    
 }
 
 // MARK: - Fetch & Mapping
@@ -113,14 +115,14 @@ extension SearchResultViewModel {
         case .all:
             return self.fetchAllResult(query: query)
         case .image:
-            return self.fetchMovieResult(query: query)
+            return self.fetchImageResult(query: query)
                 .withUnretained(self)
                 .map { owner, dataSources in
                     owner.addTabItems(dataSources)
                 }
                 .eraseToAnyPublisher()
         case .blog:
-            return fetchWebDocumentResult(query: query)
+            return fetchBlogResult(query: query)
                 .withUnretained(self)
                 .map { owner, dataSources in
                     owner.addTabItems(dataSources)
@@ -176,10 +178,36 @@ extension SearchResultViewModel {
             .eraseToAnyPublisher()
     }
     
+    private func fetchBlogResult(query: SearchQuery, offset: Int = 1, count: Int = 10) -> AnyPublisher<[DataSource], Error> {
+        return searchBlogUseCase.execute(keyword: query.keyword, offset: offset, count: count, isConnected: query.isNetworking)
+            .map { items -> [DataSource] in
+                let result = items.map {
+                    SearchResultSection.Item.blog($0)
+                }
+                return [[.blog: result]]
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchImageResult(query: SearchQuery, offset: Int = 1, count: Int = 20) -> AnyPublisher<[DataSource], Error> {
+        return searchImageUseCase.execute(keyword: query.keyword, offset: offset, count: count, isConnected: query.isNetworking)
+            .map { items -> [DataSource] in
+                let result = items.map {
+                    SearchResultSection.Item.image($0)
+                }
+                return [[.image: result]]
+            }
+            .eraseToAnyPublisher()
+    }
+    
     private func fetchAllResult(query: SearchQuery) -> AnyPublisher<[DataSource], Error> {
         return fetchWebDocumentResult(query: query, count: 3)
-            .zip(fetchMovieResult(query: query, count: 3)) { webDocument, movie in
-                return self.fetchTabItems() + webDocument + movie
+            .zip(
+                fetchImageResult(query: query, count: 3),
+                fetchMovieResult(query: query, count: 3),
+                fetchBlogResult(query: query, count: 3)
+            ) { webDocuments, images, movies, blogs in
+                return self.fetchTabItems() + images + blogs + movies + webDocuments
             }
             .eraseToAnyPublisher()
     }
