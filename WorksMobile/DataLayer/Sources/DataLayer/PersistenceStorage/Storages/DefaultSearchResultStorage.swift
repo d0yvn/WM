@@ -1,5 +1,5 @@
 //
-//  DefaultMovieResultStorage.swift
+//  DefaultSearchResultStorage.swift
 //  
 //
 //  Created by USER on 2023/01/11.
@@ -35,10 +35,7 @@ extension DefaultSearchResultStorage: SearchResultStorage {
         }
     }
     
-//    public func update<T: NSManagedObject, E: Codable>(request: NSFetchRequest<T>, keyword: String, movies: [E]) -> Future<[T], CoreDataError> {
-//        
-//        let request = MovieEntity.fetchRequest()
-//        request.predicate = NSPredicate(format: "keyword == %@", keyword)
+//    public func update(request: NSFetchRequest<MovieEntity>, keyword: String, movies: [MovieDTO]) -> Future<[MovieEntity], CoreDataError> {
 //        
 //        return Future { promise in
 //            self.coredataService.performBackgroundTask { context in
@@ -58,14 +55,16 @@ extension DefaultSearchResultStorage: SearchResultStorage {
 //        }
 //    }
 //    
-//    private func findEntity<T: NSManagedObject, E: Codable>(entities: [T], movie: E, context: NSManagedObjectContext) -> MovieEntity {
-//        
-//        if let index = entities.firstIndex(where: { $0.link ?? "" == movie.link }) {
+//    private func findEntity(entities: [MovieEntity], movie: MovieDTO, context: NSManagedObjectContext) -> MovieEntity {
+//        if let index = entities.firstIndex(where: { entity in
+//            guard let link = entity.link else { return false }
+//            return link == movie.link
+//        }) {
 //            let alreayExistedEntity = entities[index]
 //            alreayExistedEntity.latestDate = Date()
 //            return alreayExistedEntity
 //        } else {
-//            return  MovieEntity(movie: movie, context: context)
+//            return MovieEntity(movie: movie, context: context)
 //        }
 //    }
 }
