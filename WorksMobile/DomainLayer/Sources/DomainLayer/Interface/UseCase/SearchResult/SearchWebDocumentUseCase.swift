@@ -12,14 +12,3 @@ import Utils
 public protocol SearchWebDocumentUseCase {
     func execute(keyword: String, offset: Int, count: Int, isConnected: Bool) -> AnyPublisher<[WebDocument], Error>
 }
-
-extension SearchWebDocumentUseCase {
-    func execute(
-        keyword: String,
-        offset: Int,
-        count: Int,
-        isConnected: Bool = NetworkMonitorManager.shared.isConnected
-    ) -> AnyPublisher<[WebDocument], Error> {
-        return execute(keyword: keyword, offset: offset, count: count, isConnected: isConnected)
-    }
-}

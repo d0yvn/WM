@@ -12,14 +12,3 @@ import Utils
 public protocol SearchMovieUseCase {
     func execute(keyword: String, offset: Int, count: Int, isConnected: Bool) -> AnyPublisher<[Movie], Error>
 }
-
-extension SearchMovieUseCase {
-    func execute(
-        keyword: String,
-        offset: Int,
-        count: Int,
-        isConnected: Bool = NetworkMonitorManager.shared.isConnected
-    ) -> AnyPublisher<[Movie], Error> {
-        return execute(keyword: keyword, offset: offset, count: count, isConnected: isConnected)
-    }
-}

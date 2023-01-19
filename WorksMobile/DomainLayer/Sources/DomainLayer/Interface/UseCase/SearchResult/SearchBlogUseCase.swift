@@ -12,14 +12,3 @@ import Utils
 public protocol SearchBlogUseCase {
     func execute(keyword: String, offset: Int, count: Int, isConnected: Bool) -> AnyPublisher<[Blog], Error>
 }
-
-extension SearchBlogUseCase {
-    func execute(
-        keyword: String,
-        offset: Int,
-        count: Int,
-        isConnected: Bool = NetworkMonitorManager.shared.isConnected
-    ) -> AnyPublisher<[Blog], Error> {
-        return execute(keyword: keyword, offset: offset, count: count, isConnected: isConnected)
-    }
-}
