@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Utils
 
 public final class DefaultSearchImageUseCase {
     private let searchNetworkRepository: SearchNetworkRepository
@@ -29,6 +30,9 @@ extension DefaultSearchImageUseCase: SearchImageUseCase {
         count: Int,
         isConnected: Bool
     ) -> AnyPublisher<[Image], Error> {
-        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+        if isConnected {
+            return NetworkMonitorManager.shared.isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+        }
+        return searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
     }
 }

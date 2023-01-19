@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Utils
 
 public final class DefaultSearchWebDocumentUseCase {
     private let searchNetworkRepository: SearchNetworkRepository
@@ -28,6 +29,9 @@ extension DefaultSearchWebDocumentUseCase: SearchWebDocumentUseCase {
         count: Int,
         isConnected: Bool
     ) -> AnyPublisher<[WebDocument], Error> {
-        return isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+        if isConnected {
+            return NetworkMonitorManager.shared.isConnected ? searchNetworkRepository.fetchSearchResult(keyword: keyword, start: offset, display: count) : searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
+        }
+        return searchCacheReository.fetchSearchResult(keyword: keyword, start: offset, display: count)
     }
 }
